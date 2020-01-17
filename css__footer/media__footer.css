@@ -1,0 +1,56 @@
+@media (max-width: 768px) {
+    .about__us {
+        width: 600px;
+    }
+}
+@media (max-width: 640px) {
+    .about__us {
+        width: 400px;
+    }
+    .about__us p {
+        padding: 25px 40px;
+    }
+    .footer {
+        flex-wrap: wrap;
+    }
+    .left-side {
+        width: 100%;
+        text-align: center;
+        margin-bottom: 30px;
+    }
+    .left-side p {
+        width: 100%;
+        padding: 0 20px;
+    }
+    .right-side {
+        align-items: center;
+        width: 100%;
+    }
+    footer {
+        padding: 65px 0 75px;
+    }
+}
+@media (max-width: 480px) {
+    .about__us {
+        width: 280px;
+    }
+    .about__us p {
+        padding: 5px 0;
+    }
+    .left-side h3 {
+        font-size: 19px;
+    }
+    .left-side p {
+        font-size: 9px;
+        padding: 0 1~0px;
+    }
+    .navigation__item {
+        font-size: 13px;
+    }
+    .text {
+        font-size: 17px;
+    }
+    footer {
+        padding: 45px 0 55px;
+    }
+}
