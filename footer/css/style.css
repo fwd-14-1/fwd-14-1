@@ -1,0 +1,96 @@
+html {
+    box-sizing: border-box;
+}
+*,
+*::after,
+*::before {
+    box-sizing: inherit;
+}
+body {
+    font-family: 'Quicksand Bold', arial;
+    margin: 0 auto;
+}
+.container {
+    max-width: 1155px;
+    width: 100%;
+    margin: 0 auto;
+}
+section {
+    background-color: #aa9b77;
+    padding: 71px 0;
+}
+.about__us {
+    width: 712px;
+    margin: 0 auto;
+}
+.about__us fieldset {
+    border: 2px solid #978968;
+}
+.about__us legend {
+    text-align: center;
+    color: #837659;
+    font-size: 20px;
+    font-weight: 400;
+    text-transform: uppercase;
+    padding: 0 13px;
+}
+.about__us p {
+    font-size: 16px;
+    font-weight: 400;
+    color: #424242;
+    padding: 72px 120px 60px;
+    text-align: center;
+    margin: 0 auto;
+    line-height: 24px;
+}
+footer {
+    background-color: #424242;
+    color: #ffffff;
+    text-transform: uppercase;
+    padding: 105px 0 115px;
+}
+.footer {
+    display: flex;
+    justify-content: space-between;
+}
+.left-side {
+    
+}
+.left-side h3 {
+    font-size: 20px;
+    font-weight: 400;
+    margin: 0;
+}
+.left-side p {
+    font-size: 10px;
+    font-weight: 400;
+    width: 306px;
+    line-height: 20px;
+}
+.right-side {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: center;
+}
+.navigation {
+    display: flex;
+}
+.navigation__item {
+    font-size: 14px;
+    font-weight: 400;
+    border-right: 1px solid #aa9b77;
+    text-decoration: none;
+    color: #ffffff;
+    padding: 0 7px 0 12px;
+}
+.without {
+    border: none;
+}
+.text {
+    font-size: 18px;
+    font-weight: 400;
+    text-transform: none;
+    padding-top: 15px;
+    padding-right: 7px;
+}
