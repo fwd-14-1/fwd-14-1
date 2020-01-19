@@ -1,0 +1,24 @@
+.items {
+    display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  margin-top: 10px;}
+ 
+.self-item{
+    margin:20px;
+}
+
+.self-item:hover {
+    border:3px solid #696969;
+}
+a:hover{text-decoration: none;
+    color: #000;
+}
+a{
+    color: #000;
+}
