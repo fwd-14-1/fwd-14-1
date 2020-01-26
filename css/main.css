@@ -33,7 +33,7 @@ body {
   height: 80px;
   display: flex;
   align-items: center;
-  jusstify-content: space-between;
+  justify-content: space-between;
 }
 
 .header__logo h1{

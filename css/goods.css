@@ -1,0 +1,178 @@
+/* HEADER CSS */
+*{
+    box-sizing: border-box;
+}
+  
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Comfortaa', cursive;
+}
+
+.container {
+    height: auto;
+    max-width: 1155px;
+    width: 100%;
+    margin: 0 auto;
+}
+  
+.header__navbar {
+    padding: 0 100px;
+    background-color: rgb(206, 213, 217);
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    z-index: 10;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+  
+.header__logo h1{
+    font-size: 25px;
+}
+  
+.header__list {
+    display: flex;
+}
+  
+.header__list ul {
+    display: flex;
+    margin: 0 40px;
+    list-style: none;
+}
+  
+.header__list li {
+    margin: 0 40px;
+    cursor: pointer;
+    opacity: 0.7;
+}
+  
+.header__list li:hover{
+    opacity: 1;
+}
+  
+.header__list a {
+    color: rgb(19, 22, 25);
+    font-size: 16px;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+/* GOODS CSS */
+.goods{
+    margin-top: 80px;
+}
+
+.goods__content{
+    display: flex;
+}
+
+.goods__photos{
+    width: 50%;
+}
+
+.mySlides {
+    display: none;
+}
+  
+.cursor {
+    cursor: pointer;
+}
+
+.caption-container {
+    text-align: center;
+    background-color: #222;
+    padding: 2px 16px;
+    color: white;
+}
+  
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+  
+.column {
+    float: left;
+    width: 25%;
+}
+  
+.demo {
+    opacity: 0.6;
+}
+  
+.active,
+.demo:hover {
+    opacity: 1;
+}
+
+.goods__description{
+    text-align: center;
+    width: 50%;
+    margin-top: 20px;
+}
+
+.goods__name{
+    font-size: 25px;
+    font-weight: 700;  
+}
+
+.goods__price{
+    margin-top: 10px;
+    color: red;
+    font-weight: 700; 
+}
+
+  /* FOOTER CSS */
+footer {
+    background-color: #a3a78c;
+    color: #525461;
+    text-transform: uppercase;
+    padding: 50px 0 50px 0;
+}
+.footer {
+    display: flex;
+    justify-content: space-between;
+}
+.left-side h3 {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+.left-side p {
+    font-size: 10px;
+    font-weight: 400;
+    width: 306px;
+    line-height: 20px;
+}
+.right-side {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: center;
+}
+.navigation {
+    display: flex;
+}
+.navigation__item {
+    font-size: 14px;
+    font-weight: 400;
+    border-right: 1px solid #aa9b77;
+    text-decoration: none;
+    color: #525461;
+    padding: 0 7px 0 12px;
+}
+.without {
+    border: none;
+}
+.text {
+    font-size: 18px;
+    font-weight: 400;
+    text-transform: none;
+    padding-top: 15px;
+    padding-right: 7px;
+}
+  
