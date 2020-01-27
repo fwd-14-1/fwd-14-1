@@ -1,0 +1,134 @@
+html {
+    box-sizing: border-box;
+}
+*,
+*::after,
+*::before {
+    box-sizing: inherit;
+}
+body {
+    background-color: #000000;
+}
+/* Basket */
+#mini-basket {
+    display: flex;
+    justify-content: flex-end;
+}
+/* Basket backgorund */
+#mini-basket__background {
+    width: 50px;
+    height: 50px;
+    border-radius: 10px;
+    position: relative;
+    cursor: pointer;
+    transition: .3s ease;
+}
+
+#mini-basket__background:hover {
+    background: rgba(255, 255, 255, 0.8); /* Підставиться під фон на сторінці */
+}
+/* Basket picture */
+#mini-basket__link {
+    max-width: 100%;
+    background: url('img_basket/header-shop.svg') no-repeat;
+    width: 24px;
+    height: 20px;
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+/* Basket content */
+#mini-basket__hover_content {      
+    background: rgba(255, 255, 255, 0.8); /* Підставиться під фон на сторінці */
+    width: 400px;
+    height: 200px;
+    display: none;
+    position: absolute;
+    top: 50px;
+    right: 0;
+    cursor: auto;
+    padding: 20px;
+    border-radius: 20px;
+}
+.title {
+    font-size: 25px;
+    margin-bottom: 10px;
+}
+.commodity {
+    display: flex;
+    padding: 10px;
+    border-bottom: 2px dashed #000;
+}
+.commodity img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+}
+.information__about__commodity {
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.link__on__commodity {
+    transform: translateX(20px);
+    text-decoration: none;
+    color: red;
+    font-size: 14px;
+    width: 22px;
+    transition: .3s ease;
+}
+.link__on__commodity:hover {
+    color: blue;
+    text-decoration: underline;
+}
+.cost {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+.full__price {
+    font-size: 30px;
+    font-weight: bold;
+}
+.full__price span {
+    font-size: 16px;
+}
+.conclusion {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+}
+.link__in__basket a {
+    text-decoration: none;
+    border-bottom: 1px dashed green;
+    color: green;
+    transition: .3s ease;
+}
+.link__in__basket a:hover {
+    color: blueviolet;
+    border-bottom: 1px dashed blueviolet;
+}
+.main__price {
+    font-size: 35px;
+}
+.main__price span {
+    font-size: 25px;
+}
+.registration a {
+    text-decoration: none;
+    color: #ffffff;
+    font-size: 18px;
+    font-weight: bold;
+    background-color: red;
+    padding: 8px 15px;
+    border-radius: 20px;
+    transition: .3s ease;
+}
+.registration a:hover {
+    color: red;
+    background-color: #ffffff;
+}
