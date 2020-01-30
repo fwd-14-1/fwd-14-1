@@ -463,10 +463,19 @@ select {
 /* GOODS CSS */
 .goods{
   margin-top: 80px;
+  font-family: "Comfortaa", cursive;
+}
+
+.goods__container{
+  height: auto;
+  max-width: 1300px;
+  width: 100%;
+  margin: 0 auto;
 }
 
 .goods__content{
   display: flex;
+  align-items: center;
 }
 
 .goods__photos{
@@ -511,7 +520,7 @@ select {
 .goods__wrap{
   text-align: center;
   width: 50%;
-  margin-top: 20px;
+  padding: 0 20px;
 }
 
 .goods__name{
@@ -528,8 +537,8 @@ select {
 
 .goods__title h3 ,
 .goods__description h3{
-font-size: 16px;
-font-weight: 400;
+  font-size: 16px;
+  font-weight: 400;
 }
 
 .goods__buttons{
@@ -567,10 +576,10 @@ font-weight: 400;
 }
 
 .goods__links a{
+  border-bottom: 2px solid black;
   position: relative;
   color: black;
   text-decoration: none;
-  border-bottom: 2px solid black;
 }
 
 .first__link::before{
@@ -586,14 +595,24 @@ font-weight: 400;
 }
 
 .goods__description{
-margin-top: 100px;
+  margin-top: 100px;
 }
 
 .goods__description-title{
-border-bottom: 2px solid black;
-font-weight: 700;
-text-align: center;
-font-size: 20px;
+  position: relative;
+  font-weight: 700;
+  text-align: center;
+  font-size: 20px;
+}
+
+.goods__description-title::after{
+  content: "";
+  position: absolute;
+  width: 100px;
+  height: 3px;
+  background-color: #000;
+  top: -10px;
+  left: 46%;
 }
 
 .goods__description h3{
