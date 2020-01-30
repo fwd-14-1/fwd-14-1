@@ -10,6 +10,7 @@ body {
   background-color: #fff;
 }
 .basket-header {
+  z-index: 10;
   position: fixed;
   top: 0;
   right: 0;
@@ -415,6 +416,7 @@ div.card-form {
 }
 .card-input-wrapper input,
 select {
+  outline: none;
   width: 100%;
   border: none;
   border-bottom: 1px solid #b3b3b3;
@@ -456,4 +458,164 @@ select {
 
 .card-input-wrapper datalist{
   background-color: #fff;
+}
+
+/* GOODS CSS */
+.goods{
+  margin-top: 80px;
+  font-family: "Comfortaa", cursive;
+}
+
+.goods__container{
+  height: auto;
+  max-width: 1300px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.goods__content{
+  display: flex;
+  align-items: center;
+}
+
+.goods__photos{
+  width: 50%;
+}
+
+.mySlides {
+  display: none;
+}
+
+.cursor {
+  cursor: pointer;
+}
+
+.caption-container {
+  text-align: center;
+  background-color: #222;
+  padding: 2px 16px;
+  color: white;
+}
+
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.column {
+  float: left;
+  width: 25%;
+}
+
+.demo {
+  opacity: 0.6;
+}
+
+.active,
+.demo:hover {
+  opacity: 1;
+}
+
+.goods__wrap{
+  text-align: center;
+  width: 50%;
+  padding: 0 20px;
+}
+
+.goods__name{
+  font-size: 25px;
+  font-weight: 700;  
+}
+
+.goods__price{
+  font-size: 25px;
+  margin: 50px 0;
+  color: red;
+  font-weight: 700; 
+}
+
+.goods__title h3 ,
+.goods__description h3{
+  font-size: 16px;
+  font-weight: 400;
+}
+
+.goods__buttons{
+  margin-top: 60px;
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+}
+
+.goods__buttons button{
+  font-size: 12px;
+  font-weight: 700;
+  padding: 20px 30px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  text-transform: uppercase;
+}
+
+.first__btn{
+  background-color: green;
+  color: white;
+}
+
+.second__btn{
+  background-color: #b3b3b3;
+  color: black;
+}
+
+.goods__links{
+  margin: 50px 0 50px 40px;
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+.goods__links a{
+  border-bottom: 2px solid black;
+  position: relative;
+  color: black;
+  text-decoration: none;
+}
+
+.first__link::before{
+  content: url(../img/payment-24px.svg);
+  position: absolute;
+  left: -30px;
+}
+
+.second__link::before{
+  content: url(../img/redeem-24px.svg);
+  position: absolute;
+  left: -30px;
+}
+
+.goods__description{
+  margin-top: 100px;
+}
+
+.goods__description-title{
+  position: relative;
+  font-weight: 700;
+  text-align: center;
+  font-size: 20px;
+}
+
+.goods__description-title::after{
+  content: "";
+  position: absolute;
+  width: 100px;
+  height: 3px;
+  background-color: #000;
+  top: -10px;
+  left: 46%;
+}
+
+.goods__description h3{
+padding: 20px;
+margin: 0 auto;
 }
