@@ -10,4 +10,4 @@ app.get('/',function(req,res){
   app.get('/basket',function(req,res){
     res.render('basket');
   });
-  app.listen(3000);
+  app.listen(3002);
