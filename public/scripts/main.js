@@ -55,6 +55,7 @@ function addToBasket(elem) {
 function renderBasket() {
     var content = document.querySelector('.commodity');
     var contentprice = document.getElementById('fullPrice');
+    content.innerHTML="";
     var sum = 0;
     for (var item in card) {
         var out = `<img src="${goods[item]['gsx$image']['$t']}" alt="${goods[item]['gsx$name']['$t']}">`;
@@ -64,8 +65,9 @@ function renderBasket() {
             `<div class="price">${goods[item]['gsx$cost']['$t']} грн</div>`+
             ` <div class="number">${card[item]} шт.</div>`+
             `<div class="full__price">${goods[item]['gsx$cost']['$t'] * card[item]} <span>грн</span></div></div></div>`;
-    }
-    content.innerHTML += out;
+            content.innerHTML += out;
+
+        }
 }
 
 
