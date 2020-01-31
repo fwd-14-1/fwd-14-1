@@ -1,4 +1,25 @@
 @media screen and (max-width: 1000px) {
+  .goods__content{
+    display: inline;
+  }
+  .goods{
+    margin-top: 0;
+  }
+  .goods__photos {
+    width: 80%;
+    margin: 0 auto;
+}
+  .goods__wrap {
+    width: 80%;
+    margin: 20px auto;
+    padding: 0;
+}
+.goods__buttons button {
+  width: 47%;
+}
+.goods__description-title::after {
+  left: 43%;
+}
   .header__list ul{
     margin: 0 20px;
   }
@@ -27,6 +48,20 @@
 }
 
 @media (max-width: 640px) {
+  .goods__buttons button {
+    width: 100%;
+}
+  .goods__buttons :first-child{
+    margin-bottom: 10px;
+  }
+  .goods__links {
+    margin: 50px auto;
+    flex-direction: column;
+    width: 200px;
+}
+.goods__links :first-child {
+    margin-bottom: 10px;
+}
   .about__us {
     width: 400px;
   }
@@ -72,6 +107,12 @@
 }
 
 @media (max-width: 480px) {
+  .goods__description-title::after {
+    left: 38%;
+  }
+  .goods__description h3 {
+    font-size: 15px;
+}
   .about__us {
     width: 280px;
   }

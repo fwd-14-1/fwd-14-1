@@ -46,9 +46,6 @@ function ShowGoods(data) {
     }
     return out;
 }
-document.onclick = function (e) {
-    console.log(e);
-};
 
 
 function MiniBasket() {

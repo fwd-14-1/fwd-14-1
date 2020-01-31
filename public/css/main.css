@@ -569,9 +569,9 @@ select {
 }
 
 .goods__links{
-  margin: 50px 0 50px 40px;
+  margin: 50px 0;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-evenly;
   flex-wrap: wrap;
 }
 
@@ -585,13 +585,13 @@ select {
 .first__link::before{
   content: url(../img/payment-24px.svg);
   position: absolute;
-  left: -30px;
+  right: -30px;
 }
 
 .second__link::before{
   content: url(../img/redeem-24px.svg);
   position: absolute;
-  left: -30px;
+  right: -30px;
 }
 
 .goods__description{
