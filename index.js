@@ -2,18 +2,18 @@ var express = require('express');
 var app = express();
 
 app.use('/public', express.static('public'));
-app.set('view engine', 'ejs');
+app.set('view engine', 'html');
 
 app.get('/',function(req,res){
-    res.render('index');
+    res.sendFile(__dirname+'/views/index.html');
   });
   app.get('/basket',function(req,res){
-    res.render('basket');
+    res.render(__dirname+'/views/basket');
   });
   app.get('/goods',function(req,res){
-    res.render('goods');
+    res.sendFile(__dirname+'/views/goods.html');
   });
   app.get('/index',function(req,res){
-    res.render('index');
+    res.sendFile(__dirname+'/views/index.html');
   });
   app.listen(3002);

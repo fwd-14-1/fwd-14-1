@@ -1,5 +1,6 @@
 window.onload = function () {
-    card={};
+    card = {};
+    goods = {};
     let getJSON = function (url, callback) {
         let xhr = new XMLHttpRequest();
         xhr.open('GET', url, true);
@@ -23,6 +24,7 @@ window.onload = function () {
         }
         else {
             data = data['feed']['entry'];
+            goods = data;
             if (document.getElementById('goods')) {
                 document.getElementById('goods').innerHTML += ShowGoods(data);
             }
@@ -33,39 +35,51 @@ window.onload = function () {
 
         }
     });
-    document.onclick = function(e){
-        console.log(e.target.attributes.name.nodeValue);
-        if (e.target.attributes.name.nodeValue=="add_to_card")
+}
+document.onclick = function (e) {
+    console.log(e.target.attributes.name.nodeValue);
+    if (e.target.attributes.name.nodeValue == "add_to_card")
         addToBasket(e.target.attributes.data.nodeValue);
-    }   
-function addToBasket(elem){
-    if(card[elem]!== undefined){
+}
+function addToBasket(elem) {
+    if (card[elem] !== undefined) {
         card[elem]++;
     }
     else {
-        card[elem]=1;
+        card[elem] = 1;
     }
     console.log(card);
+    renderBasket();
 }
+
+function renderBasket() {
+    var content = document.querySelector('.commodity');
+    var contentprice = document.getElementById('fullPrice');
+    var sum = 0;
+    for (var item in card) {
+        var out = `<img src="${goods[item]['gsx$image']['$t']}" alt="${goods[item]['gsx$name']['$t']}">`;
+        out += ` <div class="information__about__commodity">`+
+            `<a href="" class="link__on__commodity" title="Посилання на товар">${goods[item]['gsx$name']['$t']}</a>`+
+            `<div class="cost">`+
+            `<div class="price">${goods[item]['gsx$cost']['$t']} грн</div>`+
+            ` <div class="number">${card[item]} шт.</div>`+
+            `<div class="full__price">${goods[item]['gsx$cost']['$t'] * card[item]} <span>грн</span></div></div></div>`;
+    }
+    content.innerHTML += out;
 }
 
 
 function ShowGoods(data) {
     var out = '';
     for (var key in data) {
-<<<<<<< HEAD
-        out += `<a>`
+        out += `<a>`;
         out += `<div class="card card-deck self-item text-center border-0" style="width: 18rem;">`;
-=======
-        out += `<a href="#">`
-        out += `<div class="card card-deck self-item text-center border-1 align-items-center" style="width: 18rem;">`;
->>>>>>> a5e291afff164d945594019bb5e7fbe64b9e1e24
         out += `<img class="card-img-top" src="${data[key]['gsx$image']['$t']}" alt="${data[key]['gsx$name']['$t']}">`;
         out += `<div class="card-body ">`;
         out += `<h5 class="card-title">${data[key]['gsx$name']['$t']}</h5>`;
         out += `<p class="card-text ">${data[key]['gsx$cost']['$t']}грн</p>`;
         out += `<p class="card-text">${data[key]['gsx$description']['$t']}</p>`
-        out += `<button type="button" class="btn btn-outline-info" data="${data[key]['gsx$article']['$t']}" name="add_to_card">Купити</button>`;
+        out += `<button type="button" class="btn btn-outline-info" data="${data[key]['gsx$id']['$t']}" name="add_to_card">Купити</button>`;
         out += `</div>`;
         out += `</div>`;
         out += `</a>`;
@@ -73,7 +87,6 @@ function ShowGoods(data) {
     return out;
 }
 
-<<<<<<< HEAD
 
 
 function ShowOneItem() {
@@ -131,8 +144,6 @@ function ShowOneItem() {
     console.log(out);
     return out;
 }
-=======
->>>>>>> a5e291afff164d945594019bb5e7fbe64b9e1e24
 
 
 
@@ -196,20 +207,6 @@ $(document).ready(function () {
 });
 
 
-<<<<<<< HEAD
-
-  // GOODS CARUSEL
-  var slideIndex = 1;
-  showSlides(slideIndex);
-  
-  function plusSlides(n) {
-      showSlides(slideIndex += n);
-  }
-  
-  function currentSlide(n) {
-      showSlides(slideIndex = n);
-  }
-=======
 function plusSlides(n) {
     showSlides(slideIndex += n);
 }
@@ -218,7 +215,6 @@ function currentSlide(n) {
     showSlides(slideIndex = n);
 }
 
->>>>>>> a5e291afff164d945594019bb5e7fbe64b9e1e24
 function showSlides(n) {
     var i;
     var slides = document.getElementsByClassName("mySlides");
