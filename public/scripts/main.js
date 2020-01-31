@@ -1,4 +1,6 @@
 window.onload = function () {
+    card = {};
+    goods = {};
     let getJSON = function (url, callback) {
         let xhr = new XMLHttpRequest();
         xhr.open('GET', url, true);
@@ -22,30 +24,128 @@ window.onload = function () {
         }
         else {
             data = data['feed']['entry'];
-            console.log(data);
-            document.getElementById('goods').innerHTML += ShowGoods(data);
+            goods = data;
+            if (document.getElementById('goods')) {
+                document.getElementById('goods').innerHTML += ShowGoods(data);
+            }
+            else {
+                document.getElementById('goods-content').innerHTML += ShowOneItem(data);
+
+            }
+
         }
     });
+}
+document.onclick = function (e) {
+    console.log(e.target.attributes.name.nodeValue);
+    if (e.target.attributes.name.nodeValue == "add_to_card")
+        addToBasket(e.target.attributes.data.nodeValue);
+}
+function addToBasket(elem) {
+    if (card[elem] !== undefined) {
+        card[elem]++;
+    }
+    else {
+        card[elem] = 1;
+    }
+    console.log(card);
+    renderBasket();
+}
+
+function renderBasket() {
+    var content = document.querySelector('.commodity');
+    var contentprice = document.getElementById('fullPrice');
+    var sum = 0;
+    for (var item in card) {
+        var out = `<img src="${goods[item]['gsx$image']['$t']}" alt="${goods[item]['gsx$name']['$t']}">`;
+        out += ` <div class="information__about__commodity">`+
+            `<a href="" class="link__on__commodity" title="Посилання на товар">${goods[item]['gsx$name']['$t']}</a>`+
+            `<div class="cost">`+
+            `<div class="price">${goods[item]['gsx$cost']['$t']} грн</div>`+
+            ` <div class="number">${card[item]} шт.</div>`+
+            `<div class="full__price">${goods[item]['gsx$cost']['$t'] * card[item]} <span>грн</span></div></div></div>`;
+    }
+    content.innerHTML += out;
 }
 
 
 function ShowGoods(data) {
     var out = '';
     for (var key in data) {
-        out += `<a href="#">`
-        out += `<div class="card card-deck self-item text-center border-1 align-items-center" style="width: 18rem;">`;
+        out += `<a>`;
+        out += `<div class="card card-deck self-item text-center border-0" style="width: 18rem;">`;
         out += `<img class="card-img-top" src="${data[key]['gsx$image']['$t']}" alt="${data[key]['gsx$name']['$t']}">`;
         out += `<div class="card-body ">`;
         out += `<h5 class="card-title">${data[key]['gsx$name']['$t']}</h5>`;
         out += `<p class="card-text ">${data[key]['gsx$cost']['$t']}грн</p>`;
         out += `<p class="card-text">${data[key]['gsx$description']['$t']}</p>`
-        out += `<button type="button" class="btn btn-outline-info">Купити</button>`;
+        out += `<button type="button" class="btn btn-outline-info" data="${data[key]['gsx$id']['$t']}" name="add_to_card">Купити</button>`;
         out += `</div>`;
         out += `</div>`;
         out += `</a>`;
     }
     return out;
 }
+
+
+
+function ShowOneItem() {
+    var out = '';
+    out += `<div class="goods__photos">`;
+    out += `<div class="mySlides" style="display: block;">`;
+    out += ` <img src="../public/img/ball/emilia71.JPG" style="width:100%">`;
+    out += ` </div>`;
+    out += `   <div class="mySlides">`;
+    out += `   <img src="../public/img/ball/emilia72 (1 of 1).JPG" style="width:100%">`;
+    out += `</div>`;
+
+    out += `<div class="mySlides">`;
+    out += `<img src="../public/img/ball/emilia73 (1 of 1).JPG" style="width:100%">`;
+    out += `</div>`;
+
+    out += `<div class="mySlides">`;
+    out += `  <img src="../public/img/ball/emilia74 (1 of 1).JPG" style="width:100%">`;
+    out += `</div>`;
+
+    out += `<div class="caption-container">`;
+    out += `<p id="caption">М'яч Монтессорі</p>`;
+    out += `</div>`;
+
+    out += `<div class="row">`;
+    out += `  <div class="column">`;
+    out += `  <img class="demo cursor" src="../public/img/ball/emilia71.JPG" style="width:100%"             onclick="currentSlide(1)" alt="М'яч Монтессорі">`;
+    out += `   </div>`;
+    out += `<div class="column">`;
+    out += `<img class="demo cursor" src="../public/img/ball/emilia72 (1 of 1).JPG" style="width:100%"              onclick="currentSlide(2)" alt="М'яч Монтессорі">`;
+    out += `</div>`;
+    out += `<div class="column">`;
+    out += `<img class="demo cursor" src="../public/img/ball/emilia73 (1 of 1).JPG" style="width:100%"              onclick="currentSlide(3)" alt="М'яч Монтессорі">`;
+    out += `</div>`;
+    out += `<div class="column">`;
+    out += `<img class="demo cursor" src="../public/img/ball/emilia74 (1 of 1).JPG" style="width:100%"              onclick="currentSlide(4)" alt="М'яч Монтессорі">`;
+    out += `</div>`;
+    out += ` </div>`;
+    out += `</div>`;
+    out += `<div class="goods__wrap">`;
+    out += `<div class="goods__name">М'яч Монтессорі </div>`;
+    out += `<div class="goods__price">380 грн.</div>`;
+    out += `<div class="goods__title">`;
+    out += `<h3>         Діаметр м"яча 13 см. Всередині іграшки є брязкальце (звук ніжний). Мяч повністю охайнозшитий, не містить жодних дрібних деталей. Також є мотузка (звязана з 100% нитки бавовни),нею можна кріпити іграшки до автокрісла, візочка, дитячого ліжечка чи манежу.Іграшку можна прати у пральній машинці на делікатному пранні (як і всі наші іграшки)</h3>`;
+    out += ` </div >`;
+    out += `<div class="goods__buttons">`;
+    out += `<button class="first__btn">Добавити до корзини</button>`;
+    out += `<button class="second__btn">Купити в один клік</button>`;
+    out += `</div>`;
+    out += `<div class="goods__links">`;
+    out += `<a href="#" class="first__link">Доставка і оплата</a>`;
+    out += `<a href="#" class="second__link">Налічними в магазині</a>`;
+    out += `</div>`;
+    out += `</div >`;
+    console.log(out);
+    return out;
+}
+
+
 
 
 function MiniBasket() {
@@ -106,9 +206,6 @@ $(document).ready(function () {
     });
 });
 
-// GOODS CARUSEL
-var slideIndex = 1;
-showSlides(slideIndex);
 
 function plusSlides(n) {
     showSlides(slideIndex += n);
