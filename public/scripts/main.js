@@ -53,8 +53,13 @@ function addToBasket(elem){
 function ShowGoods(data) {
     var out = '';
     for (var key in data) {
+<<<<<<< HEAD
         out += `<a>`
         out += `<div class="card card-deck self-item text-center border-0" style="width: 18rem;">`;
+=======
+        out += `<a href="#">`
+        out += `<div class="card card-deck self-item text-center border-1 align-items-center" style="width: 18rem;">`;
+>>>>>>> a5e291afff164d945594019bb5e7fbe64b9e1e24
         out += `<img class="card-img-top" src="${data[key]['gsx$image']['$t']}" alt="${data[key]['gsx$name']['$t']}">`;
         out += `<div class="card-body ">`;
         out += `<h5 class="card-title">${data[key]['gsx$name']['$t']}</h5>`;
@@ -68,6 +73,7 @@ function ShowGoods(data) {
     return out;
 }
 
+<<<<<<< HEAD
 
 
 function ShowOneItem() {
@@ -125,6 +131,8 @@ function ShowOneItem() {
     console.log(out);
     return out;
 }
+=======
+>>>>>>> a5e291afff164d945594019bb5e7fbe64b9e1e24
 
 
 
@@ -143,9 +151,6 @@ function MiniBasket() {
             this.display_link.onmouseover = function () { self.Show(); }
             this.display_link.onmouseout = function () { self.Hide(); }
         }
-
-
-
         this.content_container.style.display = 'none';
     }
 }
@@ -191,6 +196,7 @@ $(document).ready(function () {
 });
 
 
+<<<<<<< HEAD
 
   // GOODS CARUSEL
   var slideIndex = 1;
@@ -203,6 +209,16 @@ $(document).ready(function () {
   function currentSlide(n) {
       showSlides(slideIndex = n);
   }
+=======
+function plusSlides(n) {
+    showSlides(slideIndex += n);
+}
+
+function currentSlide(n) {
+    showSlides(slideIndex = n);
+}
+
+>>>>>>> a5e291afff164d945594019bb5e7fbe64b9e1e24
 function showSlides(n) {
     var i;
     var slides = document.getElementsByClassName("mySlides");
@@ -220,4 +236,5 @@ function showSlides(n) {
     dots[slideIndex - 1].className += " active";
     captionText.innerHTML = dots[slideIndex - 1].alt;
 };
+
 
