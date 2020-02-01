@@ -250,14 +250,18 @@ footer {
   margin-bottom: 10px;
 }
 .commodity {
-  display: flex;
-  padding: 10px;
-  border-bottom: 2px solid #000;
+
 }
 .commodity img {
   width: 60px;
   height: 60px;
   border-radius: 50%;
+}
+.commodity__contents {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 10px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.3);
 }
 .information__about__commodity {
   width: 80%;
@@ -305,11 +309,8 @@ footer {
   color: blueviolet;
   border-bottom: 1px dashed blueviolet;
 }
-.main__price {
-  font-size: 35px;
-}
-.main__price span {
-  font-size: 25px;
+#mainPrice {
+  font-size: 30px;
 }
 .registration a {
   text-decoration: none;

@@ -54,22 +54,39 @@ function addToBasket(elem) {
 
 function renderBasket() {
     var content = document.querySelector('.commodity');
-    var contentprice = document.getElementById('fullPrice');
+    var contentprice = document.getElementById('mainPrice');
     content.innerHTML="";
-    var sum = 0;
     for (var item in card) {
-        var out = `<img src="${goods[item]['gsx$image']['$t']}" alt="${goods[item]['gsx$name']['$t']}">`;
-        out += ` <div class="information__about__commodity">`+
+        var out = ``;
+        out += `<div class= "commodity__contents">
+             <img src="${goods[item]['gsx$image']['$t']}" alt="${goods[item]['gsx$name']['$t']}">` + 
+            `<div class="information__about__commodity">`+
             `<a href="" class="link__on__commodity" title="Посилання на товар">${goods[item]['gsx$name']['$t']}</a>`+
             `<div class="cost">`+
             `<div class="price">${goods[item]['gsx$cost']['$t']} грн</div>`+
-            ` <div class="number">${card[item]} шт.</div>`+
-            `<div class="full__price">${goods[item]['gsx$cost']['$t'] * card[item]} <span>грн</span></div></div></div>`;
+            `<div class="number">${card[item]} шт.</div>`+
+            `<div class="full__price">${goods[item]['gsx$cost']['$t'] * card[item]} <span>грн</span></div></div></div>
+             </div>`;
             content.innerHTML += out;
-
-        }
+        showTotals();
+    }
 }
 
+function showTotals() {
+    var items = document.querySelectorAll(".full__price");
+    const total = [];
+
+    items.forEach(function(price) {
+        total.push(parseFloat(price.textContent));
+    });
+    const totalMoney = total.reduce(function(total, item) {
+        total += item;
+        return total;
+    },0)
+    const finalMoney = totalMoney + ' грн';
+
+    document.getElementById("mainPrice").textContent = finalMoney;
+}
 
 function ShowGoods(data) {
     var out = '';
