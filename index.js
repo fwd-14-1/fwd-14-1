@@ -4,7 +4,7 @@ var app = express();
 app.use('/public', express.static('public'));
 app.set('view engine', 'html');
 
-app.get('/',function(req,res){
+app.get('/index',function(req,res){
     res.sendFile(__dirname+'/views/index.html');
   });
   app.get('/basket',function(req,res){

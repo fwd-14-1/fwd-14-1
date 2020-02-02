@@ -38,8 +38,9 @@ window.onload = function () {
 }
 document.onclick = function (e) {
     console.log(e.target.attributes.name.nodeValue);
-    if (e.target.attributes.name.nodeValue == "add_to_card")
+    if (e.target.attributes.name.nodeValue == "add_to_card") {
         addToBasket(e.target.attributes.data.nodeValue);
+    }
 }
 function addToBasket(elem) {
     if (card[elem] !== undefined) {
@@ -55,19 +56,19 @@ function addToBasket(elem) {
 function renderBasket() {
     var content = document.querySelector('.commodity');
     var contentprice = document.getElementById('mainPrice');
-    content.innerHTML="";
+    content.innerHTML = "";
     for (var item in card) {
         var out = ``;
         out += `<div class= "commodity__contents">
-             <img src="${goods[item]['gsx$image']['$t']}" alt="${goods[item]['gsx$name']['$t']}">` + 
-            `<div class="information__about__commodity">`+
-            `<a href="" class="link__on__commodity" title="Посилання на товар">${goods[item]['gsx$name']['$t']}</a>`+
-            `<div class="cost">`+
-            `<div class="price">${goods[item]['gsx$cost']['$t']} грн</div>`+
-            `<div class="number">${card[item]} шт.</div>`+
+             <img src="${goods[item]['gsx$image']['$t']}" alt="${goods[item]['gsx$name']['$t']}">` +
+            `<div class="information__about__commodity">` +
+            `<a href="" class="link__on__commodity" title="Посилання на товар">${goods[item]['gsx$name']['$t']}</a>` +
+            `<div class="cost">` +
+            `<div class="price">${goods[item]['gsx$cost']['$t']} грн</div>` +
+            `<div class="number">${card[item]} шт.</div>` +
             `<div class="full__price">${goods[item]['gsx$cost']['$t'] * card[item]} <span>грн</span></div></div></div>
              </div>`;
-            content.innerHTML += out;
+        content.innerHTML += out;
         showTotals();
     }
 }
@@ -76,13 +77,13 @@ function showTotals() {
     var items = document.querySelectorAll(".full__price");
     const total = [];
 
-    items.forEach(function(price) {
+    items.forEach(function (price) {
         total.push(parseFloat(price.textContent));
     });
-    const totalMoney = total.reduce(function(total, item) {
+    const totalMoney = total.reduce(function (total, item) {
         total += item;
         return total;
-    },0)
+    }, 0)
     const finalMoney = totalMoney + ' грн';
 
     document.getElementById("mainPrice").textContent = finalMoney;
@@ -91,8 +92,8 @@ function showTotals() {
 function ShowGoods(data) {
     var out = '';
     for (var key in data) {
-        out += `<a>`;
-        out += `<div class="card card-deck self-item text-center border-0" style="width: 18rem;">`;
+        out += `<a name = ${data[key]['gsx$id']['$t']}>`;
+        out += `<div class="card card-deck self-item text-center border-1" style="width: 18rem; cursor:pointer;">`;
         out += `<img class="card-img-top" src="${data[key]['gsx$image']['$t']}" alt="${data[key]['gsx$name']['$t']}">`;
         out += `<div class="card-body ">`;
         out += `<h5 class="card-title">${data[key]['gsx$name']['$t']}</h5>`;
