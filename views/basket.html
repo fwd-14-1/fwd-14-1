@@ -103,54 +103,45 @@
             <div class="make-order">
                 <span>Оформити замовлення</span>
             </div>
-            <form>
+            <form method="POST" action="basket" >
                 <div class="card-form-container">
                     <div class="card-form">
                         <div class="card__form-data">
                             <div class="card__form-label">Дані покупця</div>
                             <div class="card-input-wrapper">
-                                <input placeholder="Введите ПІБ" value="">
+                                <input placeholder="Введите ПІБ" value="" name="fullname">
                             </div>
                             <div class="card-input-wrapper">
-                                <input placeholder="Введіть номер телефону" type="tel" value="+380" maxlength="13"
+                                <input placeholder="Введіть номер телефону" type="tel" value="+380" maxlength="13" name="tel"
                                     minlength="13">
                             </div>
                         </div>
                         <div class="card__form-data">
                             <div class="card__form-label">Доставка</div>
                             <div class="card-input-wrapper">
-                                <input type="text" name="example" list="exampleList" placeholder="Виберіть з списку">
+                                <input type="text"  list="exampleList" placeholder="Виберіть з списку" name="delivery"> 
                                 <datalist id="exampleList">
                                     <option>Нова Пошта</option>
                                     <option>Укрпошта</option>
                                 </datalist></div>
                             <div class="card-input-wrapper">
-                                <input type="text" name="example" list="exampleList"
-                                    placeholder="Виберіть область доставки">
-                                <datalist id="exampleList">
-                                    <option>Нова Пошта</option>
-                                    <option>Укрпошта</option>
-                                </datalist></div>
+                                <input type="text"  name="region"
+                                    placeholder="Введіть область доставки">
+                              
                             <div class="card-input-wrapper">
-                                <input type="text" name="example" list="exampleList"
-                                    placeholder="Виберіть місто доставки">
-                                <datalist id="exampleList">
-                                    <option>Нова Пошта</option>
-                                    <option>Укрпошта</option>
-                                </datalist>
+                                <input type="text"  name="town"
+                                    placeholder="Введіть місто доставки">
+                                
                             </div>
                             <div class="card-input-wrapper">
-                                <input type="text" name="example" list="exampleList"
-                                    placeholder="Виберіть відділення для доставки">
-                                <datalist id="exampleList">
-                                    <option>Нова Пошта</option>
-                                    <option>Укрпошта</option>
-                                </datalist>
+                                <input type="text" name="vid"
+                                    placeholder="Введіть відділення для доставки">
+                               
                             </div>
                         </div>
                     </div>
                     <div class="card-input-wrapper">
-                        <input placeholder="Коментарій до замовлення" value="">
+                        <input placeholder="Коментарій до замовлення" value="" name="comment">
                     </div>
                 </div>
                 <button type="submit" class="main-button"

@@ -1,7 +1,17 @@
 window.onload = function () {
     card = {};
     goods = {};
-    let getJSON = function (url, callback) {
+    clickedItem={};
+function loadCardFromStorage(){
+    if (localStorage.getItem('card') != undefined){
+card=JSON.parse(localStorage.getItem('card'));}
+}
+function loadIdFromStorage(){
+    if (localStorage.getItem('clickedItem') != undefined){
+card=JSON.parse(localStorage.getItem('clickedItem'));}
+}
+loadCardFromStorage();   
+ let getJSON = function (url, callback) {
         let xhr = new XMLHttpRequest();
         xhr.open('GET', url, true);
         xhr.responseType = 'json';
@@ -27,9 +37,13 @@ window.onload = function () {
             goods = data;
             if (document.getElementById('goods')) {
                 document.getElementById('goods').innerHTML += ShowGoods(data);
+             renderBasket();
+
             }
             else {
-                document.getElementById('goods-content').innerHTML += ShowOneItem(data);
+                
+                document.getElementById('goods-content').innerHTML += ShowOneItem(data,localStorage.getItem('clickedItem'));
+                renderBasket();
 
             }
 
@@ -40,8 +54,16 @@ document.onclick = function (e) {
     console.log(e.target.attributes.name.nodeValue);
     if (e.target.attributes.name.nodeValue == "add_to_card") {
         addToBasket(e.target.attributes.data.nodeValue);
+        localStorage.setItem("clickedItem",JSON.stringify(e.target.attributes.data.nodeValue));
+
     }
 }
+
+
+function getClickId(id){
+    return id;
+}
+
 function addToBasket(elem) {
     if (card[elem] !== undefined) {
         card[elem]++;
@@ -50,6 +72,7 @@ function addToBasket(elem) {
         card[elem] = 1;
     }
     console.log(card);
+    localStorage.setItem("card",JSON.stringify(card));
     renderBasket();
 }
 
@@ -92,7 +115,7 @@ function showTotals() {
 function ShowGoods(data) {
     var out = '';
     for (var key in data) {
-        out += `<a name = ${data[key]['gsx$id']['$t']}>`;
+        out += `<a name = ${data[key]['gsx$id']['$t']} href="goods">`;
         out += `<div class="card card-deck self-item text-center border-1" style="width: 18rem; cursor:pointer;">`;
         out += `<img class="card-img-top" src="${data[key]['gsx$image']['$t']}" alt="${data[key]['gsx$name']['$t']}">`;
         out += `<div class="card-body ">`;
@@ -109,15 +132,17 @@ function ShowGoods(data) {
 
 
 
-function ShowOneItem() {
+function ShowOneItem(goods,target) {
     var out = '';
+    for( var item in goods){
+        if (goods[item]['gsx$id']['$t'] == target){
     out += `<div class="goods__photos">`;
     out += `<div class="mySlides" style="display: block;">`;
     out += ` <img src="../public/img/ball/emilia71.JPG" style="width:100%">`;
     out += ` </div>`;
     out += `   <div class="mySlides">`;
     out += `   <img src="../public/img/ball/emilia72 (1 of 1).JPG" style="width:100%">`;
-    out += `</div>`;
+    out += `</div>`; 
 
     out += `<div class="mySlides">`;
     out += `<img src="../public/img/ball/emilia73 (1 of 1).JPG" style="width:100%">`;
@@ -161,7 +186,8 @@ function ShowOneItem() {
     out += `<a href="#" class="second__link">Налічними в магазині</a>`;
     out += `</div>`;
     out += `</div >`;
-    console.log(out);
+    }
+}
     return out;
 }
 
