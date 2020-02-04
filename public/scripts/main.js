@@ -63,6 +63,8 @@ function addToBasket(elem) {
         card[elem] = 1;
     }
     console.log(card);
+        localStorage.setItem("card",JSON.stringify(card));
+
     renderBasket();
 }
 
