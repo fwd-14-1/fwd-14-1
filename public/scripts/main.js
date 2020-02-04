@@ -1,6 +1,11 @@
 window.onload = function () {
     card = {};
     goods = {};
+    function loadCardFromStorage(){
+    if (localStorage.getItem('card') != undefined){
+card=JSON.parse(localStorage.getItem('card'));}
+}
+loadCardFromStorage();  
     selectedGoodsID = '';
     let getJSON = function (url, callback) {
         let xhr = new XMLHttpRequest();
