@@ -1,17 +1,13 @@
 window.onload = function () {
     card = {};
     goods = {};
-    clickedItem={};
-function loadCardFromStorage(){
+    function loadCardFromStorage(){
     if (localStorage.getItem('card') != undefined){
 card=JSON.parse(localStorage.getItem('card'));}
 }
-function loadIdFromStorage(){
-    if (localStorage.getItem('clickedItem') != undefined){
-card=JSON.parse(localStorage.getItem('clickedItem'));}
-}
-loadCardFromStorage();   
- let getJSON = function (url, callback) {
+loadCardFromStorage();  
+    selectedGoodsID = '';
+    let getJSON = function (url, callback) {
         let xhr = new XMLHttpRequest();
         xhr.open('GET', url, true);
         xhr.responseType = 'json';
@@ -37,33 +33,28 @@ loadCardFromStorage();
             goods = data;
             if (document.getElementById('goods')) {
                 document.getElementById('goods').innerHTML += ShowGoods(data);
-             renderBasket();
+                             renderBasket();
+
 
             }
-            else {
-                
-                document.getElementById('goods-content').innerHTML += ShowOneItem(data,localStorage.getItem('clickedItem'));
-                renderBasket();
+            else if (document.getElementById('goods-content')) {
+                document.getElementById('goods-content').innerHTML = ShowOneItem(data);
+                             renderBasket();
 
             }
-
         }
     });
 }
 document.onclick = function (e) {
-    console.log(e.target.attributes.name.nodeValue);
+    console.log(selectedGoodsID);
+    selectedGoodsID = e.target.attributes.data.nodeValue;
     if (e.target.attributes.name.nodeValue == "add_to_card") {
-        addToBasket(e.target.attributes.data.nodeValue);
-        localStorage.setItem("clickedItem",JSON.stringify(e.target.attributes.data.nodeValue));
-
+        addToBasket(selectedGoodsID);
+    }
+    else if (e.target.attributes.name.nodeValue == "block") {
+        ShowOneItem(goods)
     }
 }
-
-
-function getClickId(id){
-    return id;
-}
-
 function addToBasket(elem) {
     if (card[elem] !== undefined) {
         card[elem]++;
@@ -72,7 +63,8 @@ function addToBasket(elem) {
         card[elem] = 1;
     }
     console.log(card);
-    localStorage.setItem("card",JSON.stringify(card));
+        localStorage.setItem("card",JSON.stringify(card));
+
     renderBasket();
 }
 
@@ -112,14 +104,15 @@ function showTotals() {
     document.getElementById("mainPrice").textContent = finalMoney;
 }
 
+
 function ShowGoods(data) {
     var out = '';
     for (var key in data) {
-        out += `<a name = ${data[key]['gsx$id']['$t']} href="goods">`;
+        out += `<a href = /goods?id=${data[key]['gsx$id']['$t']}> `;
         out += `<div class="card card-deck self-item text-center border-1" style="width: 18rem; cursor:pointer;">`;
-        out += `<img class="card-img-top" src="${data[key]['gsx$image']['$t']}" alt="${data[key]['gsx$name']['$t']}">`;
+        out += `<img data="${data[key]['gsx$id']['$t']}" name="block" class="card-img-top" src="${data[key]['gsx$image']['$t']}" alt="${data[key]['gsx$name']['$t']}">`;
         out += `<div class="card-body ">`;
-        out += `<h5 class="card-title">${data[key]['gsx$name']['$t']}</h5>`;
+        out += `<h5  class="card-title">${data[key]['gsx$name']['$t']}</h5>`;
         out += `<p class="card-text ">${data[key]['gsx$cost']['$t']}грн</p>`;
         out += `<p class="card-text">${data[key]['gsx$description']['$t']}</p>`
         out += `<button type="button" class="btn btn-outline-info" data="${data[key]['gsx$id']['$t']}" name="add_to_card">Купити</button>`;
@@ -129,69 +122,68 @@ function ShowGoods(data) {
     }
     return out;
 }
-
-
-
-function ShowOneItem(goods,target) {
+var urlParams = new URLSearchParams(window.location.search);
+// Take ID FROM URL
+function ShowOneItem(data) {
+    const test = data.find((item) => {
+        console.log(item)
+        return item.gsx$id.$t === urlParams.get('id')
+    });
     var out = '';
-    for( var item in goods){
-        if (goods[item]['gsx$id']['$t'] == target){
-    out += `<div class="goods__photos">`;
-    out += `<div class="mySlides" style="display: block;">`;
-    out += ` <img src="../public/img/ball/emilia71.JPG" style="width:100%">`;
-    out += ` </div>`;
-    out += `   <div class="mySlides">`;
-    out += `   <img src="../public/img/ball/emilia72 (1 of 1).JPG" style="width:100%">`;
-    out += `</div>`; 
 
-    out += `<div class="mySlides">`;
-    out += `<img src="../public/img/ball/emilia73 (1 of 1).JPG" style="width:100%">`;
-    out += `</div>`;
+    out += `<div class="goods__photos">
+                <div class="mySlides" style="display: block;">
+                    <img src="${test.gsx$mainimage.$t}" style="width:100%">
+                </div>
+                    <div class="mySlides">
+                        <img src="${test.gsx$imageone.$t}" style="width:100%">
+                 </div>
 
-    out += `<div class="mySlides">`;
-    out += `  <img src="../public/img/ball/emilia74 (1 of 1).JPG" style="width:100%">`;
-    out += `</div>`;
+                <div class="mySlides">
+                    <img src="${test.gsx$imagetwo.$t}" style="width:100%">
+                </div>
 
-    out += `<div class="caption-container">`;
-    out += `<p id="caption">М'яч Монтессорі</p>`;
-    out += `</div>`;
+                <div class="mySlides">
+                    <img src="${test.gsx$imagethree.$t}" style="width:100%">
+                </div>
 
-    out += `<div class="row">`;
-    out += `  <div class="column">`;
-    out += `  <img class="demo cursor" src="../public/img/ball/emilia71.JPG" style="width:100%"             onclick="currentSlide(1)" alt="М'яч Монтессорі">`;
-    out += `   </div>`;
-    out += `<div class="column">`;
-    out += `<img class="demo cursor" src="../public/img/ball/emilia72 (1 of 1).JPG" style="width:100%"              onclick="currentSlide(2)" alt="М'яч Монтессорі">`;
-    out += `</div>`;
-    out += `<div class="column">`;
-    out += `<img class="demo cursor" src="../public/img/ball/emilia73 (1 of 1).JPG" style="width:100%"              onclick="currentSlide(3)" alt="М'яч Монтессорі">`;
-    out += `</div>`;
-    out += `<div class="column">`;
-    out += `<img class="demo cursor" src="../public/img/ball/emilia74 (1 of 1).JPG" style="width:100%"              onclick="currentSlide(4)" alt="М'яч Монтессорі">`;
-    out += `</div>`;
-    out += ` </div>`;
-    out += `</div>`;
-    out += `<div class="goods__wrap">`;
-    out += `<div class="goods__name">М'яч Монтессорі </div>`;
-    out += `<div class="goods__price">380 грн.</div>`;
-    out += `<div class="goods__title">`;
-    out += `<h3>         Діаметр м"яча 13 см. Всередині іграшки є брязкальце (звук ніжний). Мяч повністю охайнозшитий, не містить жодних дрібних деталей. Також є мотузка (звязана з 100% нитки бавовни),нею можна кріпити іграшки до автокрісла, візочка, дитячого ліжечка чи манежу.Іграшку можна прати у пральній машинці на делікатному пранні (як і всі наші іграшки)</h3>`;
-    out += ` </div >`;
-    out += `<div class="goods__buttons">`;
-    out += `<button class="first__btn">Добавити до корзини</button>`;
-    out += `<button class="second__btn">Купити в один клік</button>`;
-    out += `</div>`;
-    out += `<div class="goods__links">`;
-    out += `<a href="#" class="first__link">Доставка і оплата</a>`;
-    out += `<a href="#" class="second__link">Налічними в магазині</a>`;
-    out += `</div>`;
-    out += `</div >`;
-    }
-}
+                <div class="caption-container">
+                    <p id="caption">${test.gsx$name.$t}</p>
+                </div>
+
+                <div class="row">
+                    <div class="column">
+                        <img class="demo cursor" src="${test.gsx$mainimage.$t}" style="width:100%" onclick="currentSlide(1)" alt="${test.gsx$name.$t}">
+                    </div>
+                    <div class="column">
+                        <img class="demo cursor" src="${test.gsx$imageone.$t}" style="width:100%" onclick="currentSlide(2)" alt="${test.gsx$name.$t}">
+                    </div>
+                        <div class="column">
+                        <img class="demo cursor" src="${test.gsx$imagetwo.$t}" style="width:100%" onclick="currentSlide(3)" alt="${test.gsx$name.$t}">
+                    </div>
+                    <div class="column">
+                        <img class="demo cursor" src="${test.gsx$imagethree.$t}" style="width:100%" onclick="currentSlide(4)" alt="${test.gsx$name.$t}">
+                    </div>
+                </div>
+            </div>
+            <div class="goods__wrap">
+                <div class="goods__name">${test.gsx$name.$t}</div>
+                <div class="goods__price">${test.gsx$cost.$t}грн.</div>
+                <div class="goods__title">
+                    <h3>${test.gsx$extradescription.$t}</h3>
+                </div>
+                <div class="goods__buttons">
+                    <button class="first__btn">Добавити до корзини</button>
+                    <button class="second__btn">Купити в один клік</button>
+                </div>
+                <div class="goods__links">
+                    <a href="#" class="first__link">Доставка і оплата</a>
+                    <a href="#" class="second__link">Налічними в магазині</a>
+                </div>
+            </div>`
+
     return out;
 }
-
-
 
 
 function MiniBasket() {
@@ -278,5 +270,4 @@ function showSlides(n) {
     dots[slideIndex - 1].className += " active";
     captionText.innerHTML = dots[slideIndex - 1].alt;
 };
-
 
