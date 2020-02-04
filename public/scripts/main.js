@@ -33,10 +33,14 @@ loadCardFromStorage();
             goods = data;
             if (document.getElementById('goods')) {
                 document.getElementById('goods').innerHTML += ShowGoods(data);
+                             renderBasket();
+
 
             }
             else if (document.getElementById('goods-content')) {
                 document.getElementById('goods-content').innerHTML = ShowOneItem(data);
+                             renderBasket();
+
             }
         }
     });
