@@ -110,6 +110,7 @@ function showTotals() {
 function ShowGoods(data) {
     var out = '';
     for (var key in data) {
+        out += `<div>`
         out += `<a href = /goods?id=${data[key]['gsx$id']['$t']}> `;
         out += `<div class="card card-deck self-item text-center border-1" style="width: 18rem; cursor:pointer;">`;
         out += `<img data="${data[key]['gsx$id']['$t']}" name="block" class="card-img-top" src="${data[key]['gsx$image']['$t']}" alt="${data[key]['gsx$name']['$t']}">`;
@@ -117,10 +118,11 @@ function ShowGoods(data) {
         out += `<h5  class="card-title">${data[key]['gsx$name']['$t']}</h5>`;
         out += `<p class="card-text ">${data[key]['gsx$cost']['$t']}грн</p>`;
         out += `<p class="card-text">${data[key]['gsx$description']['$t']}</p>`
+        out += `</div>`;
+        out += `</a>`;
         out += `<button type="button" class="btn btn-outline-info" data="${data[key]['gsx$id']['$t']}" name="add_to_card">Купити</button>`;
         out += `</div>`;
         out += `</div>`;
-        out += `</a>`;
     }
     return out;
 }
@@ -176,11 +178,61 @@ function ShowOneItem(data) {
                 </div>
                 <div class="goods__buttons">
                     <button class="first__btn">Добавити до корзини</button>
-                    <button class="second__btn">Купити в один клік</button>
+                    <button class="second__btn"><a href="/basket">Купити в один клік</a></button>
                 </div>
                 <div class="goods__links">
-                    <a href="#" class="first__link">Доставка і оплата</a>
-                    <a href="#" class="second__link">Налічними в магазині</a>
+                    <a href="#" class="first__link" data-toggle="modal" data-target="#staticBackdrop">Доставка і оплата</a>
+                    <!-- Modal -->
+                    <div class="modal fade" id="staticBackdrop" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="#staticBackdrop"
+                    aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Доставка і оплата</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <h3>Доставка:</h3>
+                                    <ul>
+                                        <li>Нова пошта (до відділення/до дверей)</li>
+                                        <li>Самовивіз / Особиста зустріч</li>
+                                        <li>Укрпошта</li>
+                                    </ul>
+                                    <h3>Способи оплати:</h3>
+                                    <ul>
+                                        <li>Готівковий</li>
+                                        <li>Банківський переказ</li>
+                                        <li>При доставці товару</li>
+                                        <li>Visa/Mastercard</li>
+                                    </ul>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрити</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="#" class="second__link" data-toggle="modal" data-target=".bd-example-modal-lg">Наявність в магазині</a>
+                    <!-- Modal -->
+                    <div class="modal fade bd-example-modal-lg" id="exampleModalScrollable" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog modal-lg modal-dialog-scrollable" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title text-center" id="exampleModalScrollableTitle">Наявність в магазині</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6415.976575214061!2d24.73455391851315!3d48.938428683966094!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4730c1cd378e3003%3A0xb3c03e72e9de9027!2z0IbQs9GA0LDRiNC60Lgg0KDQsNC00L7RgdGC0LjQvdC60Lg!5e0!3m2!1suk!2sua!4v1580894698653!5m2!1suk!2sua" width="750" height="500" frameborder="0" style="border:0;" allowfullscreen=""></iframe>      </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрити</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>`
 
