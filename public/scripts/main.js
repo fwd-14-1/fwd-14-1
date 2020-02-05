@@ -1,6 +1,11 @@
 window.onload = function () {
     card = {};
     goods = {};
+    function loadCardFromStorage(){
+    if (localStorage.getItem('card') != undefined){
+card=JSON.parse(localStorage.getItem('card'));}
+}
+loadCardFromStorage();  
     selectedGoodsID = '';
     let getJSON = function (url, callback) {
         let xhr = new XMLHttpRequest();
@@ -28,10 +33,14 @@ window.onload = function () {
             goods = data;
             if (document.getElementById('goods')) {
                 document.getElementById('goods').innerHTML += ShowGoods(data);
+                             renderBasket();
+
 
             }
             else if (document.getElementById('goods-content')) {
                 document.getElementById('goods-content').innerHTML = ShowOneItem(data);
+                             renderBasket();
+
             }
         }
     });
@@ -54,6 +63,8 @@ function addToBasket(elem) {
         card[elem] = 1;
     }
     console.log(card);
+        localStorage.setItem("card",JSON.stringify(card));
+
     renderBasket();
 }
 
