@@ -498,6 +498,14 @@ select {
   color: white;
 }
 
+.caption-container p{
+  margin: 10px ;
+}
+
+.row{
+  margin: 0;
+}
+
 .row:after {
   content: "";
   display: table;
@@ -619,4 +627,10 @@ select {
 .goods__description h3{
 padding: 20px;
 margin: 0 auto;
+}
+
+/* MODAL */
+
+.modal-content li{
+  padding-bottom: 10px;
 }
