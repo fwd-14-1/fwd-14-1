@@ -33,13 +33,13 @@ loadCardFromStorage();
             goods = data;
             if (document.getElementById('goods')) {
                 document.getElementById('goods').innerHTML += ShowGoods(data);
-                             renderBasket();
+                renderBasket();
 
 
             }
             else if (document.getElementById('goods-content')) {
                 document.getElementById('goods-content').innerHTML = ShowOneItem(data);
-                             renderBasket();
+                renderBasket();
 
             }
         }
@@ -72,6 +72,7 @@ function renderBasket() {
     var content = document.querySelector('.commodity');
     var contentprice = document.getElementById('mainPrice');
     content.innerHTML = "";
+    console.log('card'+JSON.stringify(card));
     for (var item in card) {
         var out = ``;
         out += `<div class= "commodity__contents">
@@ -84,6 +85,7 @@ function renderBasket() {
             `<div class="full__price">${goods[item]['gsx$cost']['$t'] * card[item]} <span>грн</span></div></div></div>
              </div>`;
         content.innerHTML += out;
+        console.log(out);
         showTotals();
     }
 }
