@@ -108,6 +108,7 @@ function showTotals() {
 function ShowGoods(data) {
     var out = '';
     for (var key in data) {
+        out += `<div>`
         out += `<a href = /goods?id=${data[key]['gsx$id']['$t']}> `;
         out += `<div class="card card-deck self-item text-center border-1" style="width: 18rem; cursor:pointer;">`;
         out += `<img data="${data[key]['gsx$id']['$t']}" name="block" class="card-img-top" src="${data[key]['gsx$image']['$t']}" alt="${data[key]['gsx$name']['$t']}">`;
@@ -115,10 +116,11 @@ function ShowGoods(data) {
         out += `<h5  class="card-title">${data[key]['gsx$name']['$t']}</h5>`;
         out += `<p class="card-text ">${data[key]['gsx$cost']['$t']}грн</p>`;
         out += `<p class="card-text">${data[key]['gsx$description']['$t']}</p>`
+        out += `</div>`;
+        out += `</a>`;
         out += `<button type="button" class="btn btn-outline-info" data="${data[key]['gsx$id']['$t']}" name="add_to_card">Купити</button>`;
         out += `</div>`;
         out += `</div>`;
-        out += `</a>`;
     }
     return out;
 }
@@ -174,7 +176,7 @@ function ShowOneItem(data) {
                 </div>
                 <div class="goods__buttons">
                     <button class="first__btn">Добавити до корзини</button>
-                    <button class="second__btn">Купити в один клік</button>
+                    <button class="second__btn"><a href="/basket">Купити в один клік</a></button>
                 </div>
                 <div class="goods__links">
                     <a href="#" class="first__link" data-toggle="modal" data-target="#staticBackdrop">Доставка і оплата</a>

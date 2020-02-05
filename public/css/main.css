@@ -249,9 +249,7 @@ footer {
   font-size: 25px;
   margin-bottom: 10px;
 }
-.commodity {
 
-}
 .commodity img {
   width: 60px;
   height: 60px;
@@ -627,6 +625,11 @@ select {
 .goods__description h3{
 padding: 20px;
 margin: 0 auto;
+}
+
+.card button{
+  width: 100%;
+
 }
 
 /* MODAL */
