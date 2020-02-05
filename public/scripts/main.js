@@ -33,13 +33,13 @@ loadCardFromStorage();
             goods = data;
             if (document.getElementById('goods')) {
                 document.getElementById('goods').innerHTML += ShowGoods(data);
-                             renderBasket();
+                renderBasket();
 
 
             }
             else if (document.getElementById('goods-content')) {
                 document.getElementById('goods-content').innerHTML = ShowOneItem(data);
-                             renderBasket();
+                renderBasket();
 
             }
         }
@@ -72,18 +72,20 @@ function renderBasket() {
     var content = document.querySelector('.commodity');
     var contentprice = document.getElementById('mainPrice');
     content.innerHTML = "";
+    console.log('card'+JSON.stringify(card));
     for (var item in card) {
         var out = ``;
         out += `<div class= "commodity__contents">
-             <img src="${goods[item]['gsx$image']['$t']}" alt="${goods[item]['gsx$name']['$t']}">` +
-            `<div class="information__about__commodity">` +
-            `<a href="" class="link__on__commodity" title="Посилання на товар">${goods[item]['gsx$name']['$t']}</a>` +
-            `<div class="cost">` +
-            `<div class="price">${goods[item]['gsx$cost']['$t']} грн</div>` +
-            `<div class="number">${card[item]} шт.</div>` +
-            `<div class="full__price">${goods[item]['gsx$cost']['$t'] * card[item]} <span>грн</span></div></div></div>
+             <img src="${goods[item]['gsx$image']['$t']}" alt="${goods[item]['gsx$name']['$t']}">
+            <div class="information__about__commodity">
+            <a href="" class="link__on__commodity" title="Посилання на товар">${goods[item]['gsx$name']['$t']}</a>
+            <div class="cost">
+            <div class="price">${goods[item]['gsx$cost']['$t']} грн</div>
+            <div class="number">${card[item]} шт.</div>
+            <div class="full__price">${goods[item]['gsx$cost']['$t'] * card[item]} <span>грн</span></div></div></div>
              </div>`;
         content.innerHTML += out;
+        console.log(out);
         showTotals();
     }
 }
@@ -108,19 +110,19 @@ function showTotals() {
 function ShowGoods(data) {
     var out = '';
     for (var key in data) {
-        out += `<div>`
-        out += `<a href = /goods?id=${data[key]['gsx$id']['$t']}> `;
-        out += `<div class="card card-deck self-item text-center border-1" style="width: 18rem; cursor:pointer;">`;
-        out += `<img data="${data[key]['gsx$id']['$t']}" name="block" class="card-img-top" src="${data[key]['gsx$image']['$t']}" alt="${data[key]['gsx$name']['$t']}">`;
-        out += `<div class="card-body ">`;
-        out += `<h5  class="card-title">${data[key]['gsx$name']['$t']}</h5>`;
-        out += `<p class="card-text ">${data[key]['gsx$cost']['$t']}грн</p>`;
-        out += `<p class="card-text">${data[key]['gsx$description']['$t']}</p>`
-        out += `</div>`;
-        out += `</a>`;
-        out += `<button type="button" class="btn btn-outline-info" data="${data[key]['gsx$id']['$t']}" name="add_to_card">Купити</button>`;
-        out += `</div>`;
-        out += `</div>`;
+        out += `<div>
+        <a href = /goods?id=${data[key]['gsx$id']['$t']}> 
+         <div class="card card-deck self-item text-center border-1" style="width: 18rem; cursor:pointer;">
+         <img data="${data[key]['gsx$id']['$t']}" name="block" class="card-img-top" src="${data[key]['gsx$image']['$t']}" alt="${data[key]['gsx$name']['$t']}">
+         <div class="card-body ">
+         <h5  class="card-title">${data[key]['gsx$name']['$t']}</h5>
+         <p class="card-text ">${data[key]['gsx$cost']['$t']}грн</p>
+         <p class="card-text">${data[key]['gsx$description']['$t']}</p>
+         </div>
+         </a>
+         <button type="button" class="btn btn-outline-info" data="${data[key]['gsx$id']['$t']}" name="add_to_card">Купити</button>
+         </div>
+         </div>`;
     }
     return out;
 }
