@@ -1,11 +1,12 @@
 window.onload = function () {
     card = {};
     goods = {};
-    function loadCardFromStorage(){
-    if (localStorage.getItem('card') != undefined){
-card=JSON.parse(localStorage.getItem('card'));}
-}
-loadCardFromStorage();  
+    function loadCardFromStorage() {
+        if (localStorage.getItem('card') != undefined) {
+            card = JSON.parse(localStorage.getItem('card'));
+        }
+    }
+    loadCardFromStorage();
     selectedGoodsID = '';
     let getJSON = function (url, callback) {
         let xhr = new XMLHttpRequest();
@@ -33,13 +34,13 @@ loadCardFromStorage();
             goods = data;
             if (document.getElementById('goods')) {
                 document.getElementById('goods').innerHTML += ShowGoods(data);
-                             renderBasket();
+                renderBasket();
 
 
             }
             else if (document.getElementById('goods-content')) {
                 document.getElementById('goods-content').innerHTML = ShowOneItem(data);
-                             renderBasket();
+                renderBasket();
 
             }
         }
@@ -55,6 +56,7 @@ document.onclick = function (e) {
         ShowOneItem(goods)
     }
 }
+
 function addToBasket(elem) {
     if (card[elem] !== undefined) {
         card[elem]++;
@@ -63,7 +65,7 @@ function addToBasket(elem) {
         card[elem] = 1;
     }
     console.log(card);
-        localStorage.setItem("card",JSON.stringify(card));
+    localStorage.setItem("card", JSON.stringify(card));
 
     renderBasket();
 }
@@ -129,11 +131,13 @@ var urlParams = new URLSearchParams(window.location.search);
 function ShowOneItem(data) {
     const test = data.find((item) => {
         console.log(item)
+        console.log(data)
         return item.gsx$id.$t === urlParams.get('id')
     });
     var out = '';
 
-    out += `<div class="goods__photos">
+    out += `<div class="goods__flex">
+                <div class="goods__photos">
                 <div class="mySlides" style="display: block;">
                     <img src="${test.gsx$mainimage.$t}" style="width:100%">
                 </div>
@@ -232,11 +236,70 @@ function ShowOneItem(data) {
                         </div>
                     </div>
                 </div>
+            </div>
+            </div>
+            <div class="goods__recomended">
+                <div class="goods__recomended-title">
+                    <h3>Вам також сподобається</h3>
+                </div>
+                <div class="goods__recomended-items">
+                    <a href = /goods?id=${data[3]['gsx$id']['$t']}>
+                        <div class="goods__recomended-item border-bottom border-secondary">
+                            <div class="goods__recomended-item__image">
+                                <img src="${data[3].gsx$mainimage.$t}" alt="">
+                            </div>
+                            <div class="goods__recomended-item-name">
+                            ${data[3].gsx$name.$t}
+                            </div>
+                            <div class="goods__recomended-item-price">
+                            ${data[3].gsx$cost.$t}грн.
+                            </div>
+                        </div>
+                    </a>
+                    <a href = /goods?id=${data[4]['gsx$id']['$t']}>
+                        <div class="goods__recomended-item border-bottom border-secondary">
+                            <div class="goods__recomended-item__image">
+                                <img src="${data[4].gsx$mainimage.$t}" alt="">
+                            </div>
+                            <div class="goods__recomended-item-name">
+                            ${data[4].gsx$name.$t}
+                            </div>
+                            <div class="goods__recomended-item-price">
+                            ${data[4].gsx$cost.$t}грн.
+                            </div>
+                        </div>
+                    </a>
+                    <a href = /goods?id=${data[5]['gsx$id']['$t']}>
+                        <div class="goods__recomended-item border-bottom border-secondary">
+                            <div class="goods__recomended-item__image">
+                                <img src="${data[5].gsx$mainimage.$t}" alt="">
+                            </div>
+                            <div class="goods__recomended-item-name">
+                            ${data[5].gsx$name.$t}
+                            </div>
+                            <div class="goods__recomended-item-price">
+                            ${data[5].gsx$cost.$t}грн.
+                            </div>
+                        </div>
+                    </a>
+                    <a href = /goods?id=${data[6]['gsx$id']['$t']}>
+                        <div class="goods__recomended-item border-bottom border-secondary">
+                            <div class="goods__recomended-item__image">
+                                <img src="${data[6].gsx$mainimage.$t}" alt="">
+                            </div>
+                            <div class="goods__recomended-item-name">
+                            ${data[6].gsx$name.$t}
+                            </div>
+                            <div class="goods__recomended-item-price">
+                            ${data[6].gsx$cost.$t}грн.
+                            </div>
+                        </div>
+                    </a>
+                </div>
             </div>`
 
     return out;
 }
-
 
 function MiniBasket() {
     var self = this;
