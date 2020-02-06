@@ -1,5 +1,5 @@
-@media screen and (max-width: 1000px) {
-  .goods__content{
+@media screen and (max-width: 1030px) {
+  .goods__flex{
     display: inline;
   }
   .goods{
@@ -7,7 +7,7 @@
   }
   .goods__photos {
     width: 80%;
-    margin: 0 auto;
+    margin: 15px auto;
 }
   .goods__wrap {
     width: 80%;
@@ -44,6 +44,13 @@
   .header__text {
     padding: 250px 0;
     font-size: 50px;
+  }
+  .goods__recomended-title h3{
+    font-size: 20px;
+  }
+  .goods__recomended-title::before{
+    width: 400px;
+    height: 2px;
   }
 }
 
@@ -86,6 +93,13 @@
   }
   footer {
     padding: 65px 0 75px;
+  }
+  .goods__price{
+    margin: 20px 0;
+  }
+  .goods__title h3, 
+  .goods__description h3{
+    font-size: 14px;
   }
 }
 
@@ -133,5 +147,11 @@
   }
   footer {
     padding: 45px 0 55px;
+  }
+  .goods__recomended-title h3{
+    font-size: 16px;
+  }
+  .goods__recomended-title::before{
+    width: 290px;
   }
 }
