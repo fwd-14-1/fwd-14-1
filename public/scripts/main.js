@@ -1,12 +1,17 @@
 window.onload = function () {
     card = {};
     goods = {};
+
+
+    /* GETTING DATA FROM STORAGE*/
     function loadCardFromStorage() {
-        if (localStorage.getItem('card') != undefined) {
-            card = JSON.parse(localStorage.getItem('card'));
+        if (sessionStorage.getItem('card') != undefined) {
+            card = JSON.parse(sessionStorage.getItem('card'));
         }
     }
     loadCardFromStorage();
+    /* END */
+
     selectedGoodsID = '';
     let getJSON = function (url, callback) {
         let xhr = new XMLHttpRequest();
@@ -25,7 +30,6 @@ window.onload = function () {
     }
 
     getJSON('https://spreadsheets.google.com/feeds/list/1bLe6_mQakrnM6NCYyQr8llzPNo8C0jDOFXeluF7nx3E/od6/public/values?alt=json', function (err, data) {
-        console.log(data);
         if (err != null) {
             console.log('Error:');
         }
@@ -52,13 +56,19 @@ window.onload = function () {
     });
 }
 
+/* INSERT DATA INTO HIDDEN INPUT*/
 function insertData() {
     var out = "";
     for (var item in card) {
-        out += `${goods[item]['gsx$name']['$t']} : ${card[item]} штук    `;
+        out += `${goods[item]['gsx$name']['$t']} : ${card[item]} шт    `;
     }
     return out;
 }
+/* END */
+
+
+/*  */
+
 document.onclick = function (e) {
     selectedGoodsID = e.target.attributes.data.nodeValue;
     if (e.target.attributes.name.nodeValue == "add_to_card") {
@@ -68,19 +78,32 @@ document.onclick = function (e) {
         ShowOneItem(goods);
     }
     else if (e.target.attributes.name.nodeValue == "card_add") {
-        console.log(e.target.attributes.name.nodeValue);
         addToBasket(selectedGoodsID);
-        console.log("dfsd" + card[selectedGoodsID]);
-        document.getElementById('count').innerHTML = card[selectedGoodsID];
+        document.getElementById(`count-${goods[selectedGoodsID]['gsx$id']['$t']}`).innerHTML = card[selectedGoodsID];
+        document.getElementById(`item-cost-${goods[selectedGoodsID]['gsx$id']['$t']}`).innerHTML = goods[selectedGoodsID]['gsx$cost']['$t'] * card[selectedGoodsID] + "грн";
     }
     else if (e.target.attributes.name.nodeValue == "card_delete") {
-        console.log(e.target.attributes.name.nodeValue);
-        addToBasket(selectedGoodsID);
-        console.log("dfsd" + card[selectedGoodsID]);
-        document.getElementById('count').innerHTML = card[selectedGoodsID];
-
+        removeFromBasket(selectedGoodsID);
+        document.getElementById(`count-${goods[selectedGoodsID]['gsx$id']['$t']}`).innerHTML = card[selectedGoodsID];
+        document.getElementById(`item-cost-${goods[selectedGoodsID]['gsx$id']['$t']}`).innerHTML = goods[selectedGoodsID]['gsx$cost']['$t'] * card[selectedGoodsID] + "грн";
 
     }
+}
+
+
+/* GOODS CSS */
+
+
+/* CHANGE THE STORAGE DATA CSS */
+function removeFromBasket(elem) {
+    if (card[elem] != 0) {
+        card[elem]--;
+    }
+    else {
+        sessionStorage.removeItem(""+elem);
+        }
+    sessionStorage.setItem("card", JSON.stringify(card));
+    renderBasket();
 }
 
 function addToBasket(elem) {
@@ -90,16 +113,17 @@ function addToBasket(elem) {
     else {
         card[elem] = 1;
     }
-    console.log(card);
-    localStorage.setItem("card", JSON.stringify(card));
-
+    sessionStorage.setItem("card", JSON.stringify(card));
     renderBasket();
 }
+/* END*/
 
+
+/* ADDING CONTENT INTO BASKET PAGE */
 function showBasketContent(goods) {
     var out = ``;
     for (var item in card) {
-        out += `<div class="basket-view-container">
+        out += `<div class="basket-view-container" id ="del-${goods[item]['gsx$id']['$t']}">
             <div class="basket-view">
                 <div class="item-photo">
                     <img src="${goods[item]['gsx$image']['$t']}" alt="${goods[item]['gsx$name']['$t']}"></div>
@@ -109,10 +133,10 @@ function showBasketContent(goods) {
                     </div>
                     <div class="card-product-count">
                         <button name='card_add' data="${goods[item]['gsx$id']['$t']}" >+</button>
-                        <div id="count">${card[item]}</div>
+                        <div id="count-${goods[item]['gsx$id']['$t']}">${card[item]}</div>
                         <button name='card_delete' data="${goods[item]['gsx$id']['$t']}" id="add">-</button>
                     </div>
-                    <div class="item-cost">${goods[item]['gsx$cost']['$t'] * card[item]}</div>
+                    <div id = "item-cost-${goods[item]['gsx$id']['$t']}" class="item-cost">${goods[item]['gsx$cost']['$t'] * card[item]} грн</div>
                     <div class="delete-item">
                         <button>
                             <img src="../public/img/delete.png" alt=""></div>
@@ -120,19 +144,17 @@ function showBasketContent(goods) {
                     </div>
                 </div>
                 <hr>`;
-
-
     }
     return out;
-
 }
-function addBasketData() { }
+/*END*/
 
+
+/* MINI BASKET CSS */
 function renderBasket() {
     var content = document.querySelector('.commodity');
     var contentprice = document.getElementById('mainPrice');
     content.innerHTML = "";
-    console.log('card' + JSON.stringify(card));
     for (var item in card) {
         var out = ``;
         out += `<div class="commodity__contents">
@@ -145,7 +167,6 @@ function renderBasket() {
                                         <div class="full__price">${goods[item]['gsx$cost']['$t'] * card[item]} <span>грн</span></div></div></div>
              </div>`;
         content.innerHTML += out;
-        console.log(out);
         showTotals();
     }
 }
@@ -165,6 +186,8 @@ function showTotals() {
 
     document.getElementById("mainPrice").textContent = finalMoney;
 }
+/* END */
+
 
 
 function ShowGoods(data) {
@@ -187,6 +210,9 @@ function ShowGoods(data) {
     return out;
 }
 var urlParams = new URLSearchParams(window.location.search);
+
+
+
 // Take ID FROM URL
 function ShowOneItem(data) {
     const test = data.find((item) => {
@@ -361,6 +387,9 @@ function ShowOneItem(data) {
     return out;
 }
 
+/* MINI BASKET ON MOUSEIN */
+
+
 function MiniBasket() {
     var self = this;
 
@@ -397,13 +426,14 @@ MiniBasket.prototype.Hide = function () {
 
 var minibasket = new MiniBasket();
 
+/* END */
 
 
+
+/* HEADER FIXED FUNCTION  */
 
 $(document).ready(function () {
     const $window = $(window);
-
-
     $(window).scroll(function () {
         if ($(window).scrollTop() >= $window.height()) {
             $('#hidden-header').css({
@@ -413,13 +443,12 @@ $(document).ready(function () {
         } else {
             $('#hidden-header').css({ border: 'none', 'background-color': 'transparent', 'box-shadow': 'none' });
         }
-
-
-
     });
-
 });
+/* END */
 
+
+/* Sliden on goods page */
 
 function plusSlides(n) {
     showSlides(slideIndex += n);
@@ -446,10 +475,14 @@ function showSlides(n) {
     dots[slideIndex - 1].className += " active";
     captionText.innerHTML = dots[slideIndex - 1].alt;
 };
+/* END */
 
+
+/* SENDING DATA FOR NODEJS */
 $(function () {
     $("#main-form").submit(function (event) {
         event.preventDefault();
         $.post("/basket", $(this).serialize());
     })
 })
+/* END */
