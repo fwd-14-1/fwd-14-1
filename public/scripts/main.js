@@ -83,10 +83,16 @@ document.onclick = function (e) {
         document.getElementById(`item-cost-${goods[selectedGoodsID]['gsx$id']['$t']}`).innerHTML = goods[selectedGoodsID]['gsx$cost']['$t'] * card[selectedGoodsID] + "грн";
     }
     else if (e.target.attributes.name.nodeValue == "card_delete") {
+        delete card[selectedGoodsID];
+        sessionStorage.setItem("card", JSON.stringify(card));
+        renderBasket();
+        document.getElementById(`del-${goods[selectedGoodsID]['gsx$id']['$t']}`).innerHTML = "";
+    }
+    else if (e.target.attributes.name.nodeValue == "card_delete_one") {
         removeFromBasket(selectedGoodsID);
+        renderBasket();
         document.getElementById(`count-${goods[selectedGoodsID]['gsx$id']['$t']}`).innerHTML = card[selectedGoodsID];
         document.getElementById(`item-cost-${goods[selectedGoodsID]['gsx$id']['$t']}`).innerHTML = goods[selectedGoodsID]['gsx$cost']['$t'] * card[selectedGoodsID] + "грн";
-
     }
 }
 
@@ -96,12 +102,16 @@ document.onclick = function (e) {
 
 /* CHANGE THE STORAGE DATA CSS */
 function removeFromBasket(elem) {
-    if (card[elem] != 0) {
+    if (card[elem] != 1) {
         card[elem]--;
     }
     else {
-        sessionStorage.removeItem(""+elem);
-        }
+        document.getElementById(`del-${goods[selectedGoodsID]['gsx$id']['$t']}`).innerHTML = "";
+        delete card[selectedGoodsID];
+        sessionStorage.setItem("card", JSON.stringify(card));
+        renderBasket();
+
+    }
     sessionStorage.setItem("card", JSON.stringify(card));
     renderBasket();
 }
@@ -134,16 +144,16 @@ function showBasketContent(goods) {
                     <div class="card-product-count">
                         <button name='card_add' data="${goods[item]['gsx$id']['$t']}" >+</button>
                         <div id="count-${goods[item]['gsx$id']['$t']}">${card[item]}</div>
-                        <button name='card_delete' data="${goods[item]['gsx$id']['$t']}" id="add">-</button>
+                        <button name='card_delete_one' data="${goods[item]['gsx$id']['$t']}" id="add">-</button>
                     </div>
                     <div id = "item-cost-${goods[item]['gsx$id']['$t']}" class="item-cost">${goods[item]['gsx$cost']['$t'] * card[item]} грн</div>
                     <div class="delete-item">
                         <button>
-                            <img src="../public/img/delete.png" alt=""></div>
+                            <img src="../public/img/delete.png" alt="" name='card_delete' data="${goods[item]['gsx$id']['$t']}"></div>
                         </button>
                     </div>
-                </div>
-                <hr>`;
+                
+               </div>`;
     }
     return out;
 }
@@ -265,7 +275,7 @@ function ShowOneItem(data) {
                                                                         <h3>${test.gsx$extradescription.$t}</h3>
                                                                     </div>
                                                                     <div class="goods__buttons">
-                                                                        <button class="first__btn">Добавити до корзини</button>
+                                                                        <button class="first__btn" data="${test['gsx$id']['$t']}" name="add_to_card">Добавити до корзини</button>
                                                                         <button class="second__btn"><a href="/basket">Купити в один клік</a></button>
                                                                     </div>
                                                                     <div class="goods__links">
@@ -480,7 +490,9 @@ function showSlides(n) {
 
 /* SENDING DATA FOR NODEJS */
 $(function () {
-    $("#main-form").submit(function (event) {
+    $("#main-form").su
+
+    bmit(function (event) {
         event.preventDefault();
         $.post("/basket", $(this).serialize());
     })
