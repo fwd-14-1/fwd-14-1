@@ -54,10 +54,11 @@ console.log(req.body);
   };
   transporter.sendMail(mailOptions, function (error, info) {
     if (error) {
-      res.redirect('basket');
+      res.send();
     } else {
       console.log('Email sent: ' + info.response);
-      res.redirect('basket');
+      res.end();
+
     }
   });
 }
