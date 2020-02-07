@@ -459,8 +459,9 @@ select {
 .card-input-wrapper datalist {
   background-color: #fff;
 }
-/*#basketData {
-//visibility: hidden;}*/
+#basketData {
+  visibility: hidden;
+}
 
 /* GOODS CSS */
 .goods {
