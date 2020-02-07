@@ -114,8 +114,7 @@ hr {
 
 .self-item {
   margin: 20px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.5);
-
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
 .self-item:hover {
   border: 3px solid #696969;
@@ -457,17 +456,19 @@ select {
   width: 80%;
 }
 
-.card-input-wrapper datalist{
+.card-input-wrapper datalist {
   background-color: #fff;
 }
+/*#basketData {
+//visibility: hidden;}*/
 
 /* GOODS CSS */
-.goods{
+.goods {
   margin-top: 80px;
   font-family: "Comfortaa", cursive;
 }
 
-.goods__container{
+.goods__container {
   height: auto;
   max-width: 1300px;
   width: 100%;
@@ -475,12 +476,12 @@ select {
   padding: 0 10px;
 }
 
-.goods__flex{
+.goods__flex {
   display: flex;
   align-items: center;
 }
 
-.goods__photos{
+.goods__photos {
   width: 50%;
 }
 
@@ -499,11 +500,11 @@ select {
   color: white;
 }
 
-.caption-container p{
-  margin: 10px ;
+.caption-container p {
+  margin: 10px;
 }
 
-.row{
+.row {
   margin: 0;
 }
 
@@ -527,38 +528,38 @@ select {
   opacity: 1;
 }
 
-.goods__wrap{
+.goods__wrap {
   text-align: center;
   width: 50%;
   padding: 0 20px;
 }
 
-.goods__name{
+.goods__name {
   font-size: 25px;
-  font-weight: 700;  
+  font-weight: 700;
 }
 
-.goods__price{
+.goods__price {
   font-size: 25px;
   margin: 50px 0;
   color: red;
-  font-weight: 700; 
+  font-weight: 700;
 }
 
-.goods__title h3 ,
-.goods__description h3{
+.goods__title h3,
+.goods__description h3 {
   font-size: 16px;
   font-weight: 400;
 }
 
-.goods__buttons{
+.goods__buttons {
   margin-top: 60px;
   display: flex;
   justify-content: space-evenly;
   flex-wrap: wrap;
 }
 
-.goods__buttons button{
+.goods__buttons button {
   font-size: 12px;
   font-weight: 700;
   padding: 20px 30px;
@@ -568,54 +569,54 @@ select {
   text-transform: uppercase;
 }
 
-.first__btn{
+.first__btn {
   background-color: green;
   color: white;
 }
 
-.second__btn{
+.second__btn {
   background-color: #b3b3b3;
   color: black;
 }
 
-.goods__links{
+.goods__links {
   margin: 50px 0;
   display: flex;
   justify-content: space-evenly;
   flex-wrap: wrap;
 }
 
-.goods__links a{
+.goods__links a {
   border-bottom: 2px solid black;
   position: relative;
   color: black;
   text-decoration: none;
 }
 
-.first__link::before{
+.first__link::before {
   content: url(../img/payment-24px.svg);
   position: absolute;
   right: -30px;
 }
 
-.second__link::before{
+.second__link::before {
   content: url(../img/redeem-24px.svg);
   position: absolute;
   right: -30px;
 }
 
-.goods__description{
+.goods__description {
   margin-top: 100px;
 }
 
-.goods__description-title{
+.goods__description-title {
   position: relative;
   font-weight: 700;
   text-align: center;
   font-size: 20px;
 }
 
-.goods__description-title::after{
+.goods__description-title::after {
   content: "";
   position: absolute;
   width: 100px;
@@ -625,26 +626,26 @@ select {
   left: 46%;
 }
 
-.goods__description h3{
-padding: 20px;
-margin: 0 auto;
+.goods__description h3 {
+  padding: 20px;
+  margin: 0 auto;
 }
 
-.goods__recomended{
+.goods__recomended {
   margin-top: 100px;
 }
 
-.goods__recomended-title{
+.goods__recomended-title {
   position: relative;
   text-transform: uppercase;
 }
 
-.goods__recomended-title h3{
+.goods__recomended-title h3 {
   font-size: 25px;
   font-weight: 700;
 }
 
-.goods__recomended-title::before{
+.goods__recomended-title::before {
   position: absolute;
   content: "";
   width: 500px;
@@ -653,7 +654,7 @@ margin: 0 auto;
   bottom: -15px;
 }
 
-.goods__recomended-items{
+.goods__recomended-items {
   text-align: center;
   margin-top: 100px;
   display: flex;
@@ -661,36 +662,36 @@ margin: 0 auto;
   justify-content: space-around;
 }
 
-.goods__recomended-item{
+.goods__recomended-item {
   cursor: pointer;
   padding-bottom: 10px;
   margin-bottom: 10px;
 }
 
-.goods__recomended-item-name{
+.goods__recomended-item-name {
   font-size: 20px;
   margin-top: 15px;
 }
 
-.goods__recomended-item-price{
+.goods__recomended-item-price {
   margin: 10px 0;
   color: red;
   font-weight: 700;
 }
 
-.goods__recomended-item__image img{
+.goods__recomended-item__image img {
   padding: 0 5px;
   width: 300px;
   height: 200px;
 }
 
-.card button{
+.card button {
   width: 100%;
   border-radius: 0;
 }
 
 /* MODAL */
 
-.modal-content li{
+.modal-content li {
   padding-bottom: 10px;
 }

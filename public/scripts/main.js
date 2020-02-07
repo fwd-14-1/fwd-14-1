@@ -41,19 +41,45 @@ window.onload = function () {
             else if (document.getElementById('goods-content')) {
                 document.getElementById('goods-content').innerHTML = ShowOneItem(data);
                 renderBasket();
+            }
+            else if (document.getElementById('basketContent')) {
+                document.getElementById('basketContent').innerHTML = showBasketContent(data);
+                document.getElementById('basketData').innerHTML = `<textarea value="" name="comment">${insertData()}</textarea>`;
 
+                renderBasket();
             }
         }
     });
 }
+
+function insertData() {
+    var out = "";
+    for (var item in card) {
+        out += `${goods[item]['gsx$name']['$t']} : ${card[item]} штук    `;
+    }
+    return out;
+}
 document.onclick = function (e) {
-    console.log(selectedGoodsID);
     selectedGoodsID = e.target.attributes.data.nodeValue;
     if (e.target.attributes.name.nodeValue == "add_to_card") {
         addToBasket(selectedGoodsID);
     }
     else if (e.target.attributes.name.nodeValue == "block") {
-        ShowOneItem(goods)
+        ShowOneItem(goods);
+    }
+    else if (e.target.attributes.name.nodeValue == "card_add") {
+        console.log(e.target.attributes.name.nodeValue);
+        addToBasket(selectedGoodsID);
+        console.log("dfsd" + card[selectedGoodsID]);
+        document.getElementById('count').innerHTML = card[selectedGoodsID];
+    }
+    else if (e.target.attributes.name.nodeValue == "card_delete") {
+        console.log(e.target.attributes.name.nodeValue);
+        addToBasket(selectedGoodsID);
+        console.log("dfsd" + card[selectedGoodsID]);
+        document.getElementById('count').innerHTML = card[selectedGoodsID];
+
+
     }
 }
 
@@ -70,21 +96,53 @@ function addToBasket(elem) {
     renderBasket();
 }
 
+function showBasketContent(goods) {
+    var out = ``;
+    for (var item in card) {
+        out += `<div class="basket-view-container">
+            <div class="basket-view">
+                <div class="item-photo">
+                    <img src="${goods[item]['gsx$image']['$t']}" alt="${goods[item]['gsx$name']['$t']}"></div>
+                    <div class="card-product-info">
+                        <div>${goods[item]['gsx$name']['$t']}</div>
+                        <div>${goods[item]['gsx$article']['$t']}</div>
+                    </div>
+                    <div class="card-product-count">
+                        <button name='card_add' data="${goods[item]['gsx$id']['$t']}" >+</button>
+                        <div id="count">${card[item]}</div>
+                        <button name='card_delete' data="${goods[item]['gsx$id']['$t']}" id="add">-</button>
+                    </div>
+                    <div class="item-cost">${goods[item]['gsx$cost']['$t'] * card[item]}</div>
+                    <div class="delete-item">
+                        <button>
+                            <img src="../public/img/delete.png" alt=""></div>
+                        </button>
+                    </div>
+                </div>
+                <hr>`;
+
+
+    }
+    return out;
+
+}
+function addBasketData() { }
+
 function renderBasket() {
     var content = document.querySelector('.commodity');
     var contentprice = document.getElementById('mainPrice');
     content.innerHTML = "";
-    console.log('card'+JSON.stringify(card));
+    console.log('card' + JSON.stringify(card));
     for (var item in card) {
         var out = ``;
-        out += `<div class= "commodity__contents">
-             <img src="${goods[item]['gsx$image']['$t']}" alt="${goods[item]['gsx$name']['$t']}">
-            <div class="information__about__commodity">
-            <a href="" class="link__on__commodity" title="Посилання на товар">${goods[item]['gsx$name']['$t']}</a>
-            <div class="cost">
-            <div class="price">${goods[item]['gsx$cost']['$t']} грн</div>
-            <div class="number">${card[item]} шт.</div>
-            <div class="full__price">${goods[item]['gsx$cost']['$t'] * card[item]} <span>грн</span></div></div></div>
+        out += `<div class="commodity__contents">
+                            <img src="${goods[item]['gsx$image']['$t']}" alt="${goods[item]['gsx$name']['$t']}">
+                                <div class="information__about__commodity">
+                                    <a href="" class="link__on__commodity" title="Посилання на товар">${goods[item]['gsx$name']['$t']}</a>
+                                    <div class="cost">
+                                        <div class="price">${goods[item]['gsx$cost']['$t']} грн</div>
+                                        <div class="number">${card[item]} шт.</div>
+                                        <div class="full__price">${goods[item]['gsx$cost']['$t'] * card[item]} <span>грн</span></div></div></div>
              </div>`;
         content.innerHTML += out;
         console.log(out);
@@ -139,166 +197,166 @@ function ShowOneItem(data) {
     var out = '';
 
     out += `<div class="goods__flex">
-                <div class="goods__photos">
-                <div class="mySlides" style="display: block;">
-                    <img src="${test.gsx$mainimage.$t}" style="width:100%">
+                                <div class="goods__photos">
+                                    <div class="mySlides" style="display: block;">
+                                        <img src="${test.gsx$mainimage.$t}" style="width:100%">
                 </div>
-                    <div class="mySlides">
-                        <img src="${test.gsx$imageone.$t}" style="width:100%">
+                                        <div class="mySlides">
+                                            <img src="${test.gsx$imageone.$t}" style="width:100%">
                  </div>
 
-                <div class="mySlides">
-                    <img src="${test.gsx$imagetwo.$t}" style="width:100%">
+                                            <div class="mySlides">
+                                                <img src="${test.gsx$imagetwo.$t}" style="width:100%">
                 </div>
 
-                <div class="mySlides">
-                    <img src="${test.gsx$imagethree.$t}" style="width:100%">
+                                                <div class="mySlides">
+                                                    <img src="${test.gsx$imagethree.$t}" style="width:100%">
                 </div>
 
-                <div class="caption-container">
-                    <p id="caption">${test.gsx$name.$t}</p>
-                </div>
+                                                    <div class="caption-container">
+                                                        <p id="caption">${test.gsx$name.$t}</p>
+                                                    </div>
 
-                <div class="row">
-                    <div class="column">
-                        <img class="demo cursor" src="${test.gsx$mainimage.$t}" style="width:100%" onclick="currentSlide(1)" alt="${test.gsx$name.$t}">
+                                                    <div class="row">
+                                                        <div class="column">
+                                                            <img class="demo cursor" src="${test.gsx$mainimage.$t}" style="width:100%" onclick="currentSlide(1)" alt="${test.gsx$name.$t}">
                     </div>
-                    <div class="column">
-                        <img class="demo cursor" src="${test.gsx$imageone.$t}" style="width:100%" onclick="currentSlide(2)" alt="${test.gsx$name.$t}">
+                                                            <div class="column">
+                                                                <img class="demo cursor" src="${test.gsx$imageone.$t}" style="width:100%" onclick="currentSlide(2)" alt="${test.gsx$name.$t}">
                     </div>
-                        <div class="column">
-                        <img class="demo cursor" src="${test.gsx$imagetwo.$t}" style="width:100%" onclick="currentSlide(3)" alt="${test.gsx$name.$t}">
+                                                                <div class="column">
+                                                                    <img class="demo cursor" src="${test.gsx$imagetwo.$t}" style="width:100%" onclick="currentSlide(3)" alt="${test.gsx$name.$t}">
                     </div>
-                    <div class="column">
-                        <img class="demo cursor" src="${test.gsx$imagethree.$t}" style="width:100%" onclick="currentSlide(4)" alt="${test.gsx$name.$t}">
+                                                                    <div class="column">
+                                                                        <img class="demo cursor" src="${test.gsx$imagethree.$t}" style="width:100%" onclick="currentSlide(4)" alt="${test.gsx$name.$t}">
                     </div>
-                </div>
-            </div>
-            <div class="goods__wrap">
-                <div class="goods__name">${test.gsx$name.$t}</div>
-                <div class="goods__price">${test.gsx$cost.$t}грн.</div>
-                <div class="goods__title">
-                    <h3>${test.gsx$extradescription.$t}</h3>
-                </div>
-                <div class="goods__buttons">
-                    <button class="first__btn">Добавити до корзини</button>
-                    <button class="second__btn"><a href="/basket">Купити в один клік</a></button>
-                </div>
-                <div class="goods__links">
-                    <a href="#" class="first__link" data-toggle="modal" data-target="#staticBackdrop">Доставка і оплата</a>
-                    <!-- Modal -->
+                                                                    </div>
+                                                                </div>
+                                                                <div class="goods__wrap">
+                                                                    <div class="goods__name">${test.gsx$name.$t}</div>
+                                                                    <div class="goods__price">${test.gsx$cost.$t}грн.</div>
+                                                                    <div class="goods__title">
+                                                                        <h3>${test.gsx$extradescription.$t}</h3>
+                                                                    </div>
+                                                                    <div class="goods__buttons">
+                                                                        <button class="first__btn">Добавити до корзини</button>
+                                                                        <button class="second__btn"><a href="/basket">Купити в один клік</a></button>
+                                                                    </div>
+                                                                    <div class="goods__links">
+                                                                        <a href="#" class="first__link" data-toggle="modal" data-target="#staticBackdrop">Доставка і оплата</a>
+                                                                        <!-- Modal -->
                     <div class="modal fade" id="staticBackdrop" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="#staticBackdrop"
-                    aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">Доставка і оплата</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    <h3>Доставка:</h3>
-                                    <ul>
-                                        <li>Нова пошта (до відділення/до дверей)</li>
-                                        <li>Самовивіз / Особиста зустріч</li>
-                                        <li>Укрпошта</li>
-                                    </ul>
-                                    <h3>Способи оплати:</h3>
-                                    <ul>
-                                        <li>Готівковий</li>
-                                        <li>Банківський переказ</li>
-                                        <li>При доставці товару</li>
-                                        <li>Visa/Mastercard</li>
-                                    </ul>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрити</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <a href="#" class="second__link" data-toggle="modal" data-target=".bd-example-modal-lg">Наявність в магазині</a>
-                    <!-- Modal -->
+                                                                            aria-hidden="true">
+                                                                            <div class="modal-dialog" role="document">
+                                                                                <div class="modal-content">
+                                                                                    <div class="modal-header">
+                                                                                        <h5 class="modal-title" id="exampleModalLabel">Доставка і оплата</h5>
+                                                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                                            <span aria-hidden="true">&times;</span>
+                                                                                        </button>
+                                                                                    </div>
+                                                                                    <div class="modal-body">
+                                                                                        <h3>Доставка:</h3>
+                                                                                        <ul>
+                                                                                            <li>Нова пошта (до відділення/до дверей)</li>
+                                                                                            <li>Самовивіз / Особиста зустріч</li>
+                                                                                            <li>Укрпошта</li>
+                                                                                        </ul>
+                                                                                        <h3>Способи оплати:</h3>
+                                                                                        <ul>
+                                                                                            <li>Готівковий</li>
+                                                                                            <li>Банківський переказ</li>
+                                                                                            <li>При доставці товару</li>
+                                                                                            <li>Visa/Mastercard</li>
+                                                                                        </ul>
+                                                                                    </div>
+                                                                                    <div class="modal-footer">
+                                                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрити</button>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <a href="#" class="second__link" data-toggle="modal" data-target=".bd-example-modal-lg">Наявність в магазині</a>
+                                                                        <!-- Modal -->
                     <div class="modal fade bd-example-modal-lg" id="exampleModalScrollable" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog modal-lg modal-dialog-scrollable" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title text-center" id="exampleModalScrollableTitle">Наявність в магазині</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6415.976575214061!2d24.73455391851315!3d48.938428683966094!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4730c1cd378e3003%3A0xb3c03e72e9de9027!2z0IbQs9GA0LDRiNC60Lgg0KDQsNC00L7RgdGC0LjQvdC60Lg!5e0!3m2!1suk!2sua!4v1580894698653!5m2!1suk!2sua" width="750" height="500" frameborder="0" style="border:0;" allowfullscreen=""></iframe>      </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрити</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            </div>
-            <div class="goods__recomended">
-                <div class="goods__recomended-title">
-                    <h3>Вам також сподобається</h3>
-                </div>
-                <div class="goods__recomended-items">
-                    <a href = /goods?id=${data[3]['gsx$id']['$t']}>
+                                                                            <div class="modal-dialog modal-dialog modal-lg modal-dialog-scrollable" role="document">
+                                                                                <div class="modal-content">
+                                                                                    <div class="modal-header">
+                                                                                        <h5 class="modal-title text-center" id="exampleModalScrollableTitle">Наявність в магазині</h5>
+                                                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                                            <span aria-hidden="true">&times;</span>
+                                                                                        </button>
+                                                                                    </div>
+                                                                                    <div class="modal-body">
+                                                                                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6415.976575214061!2d24.73455391851315!3d48.938428683966094!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4730c1cd378e3003%3A0xb3c03e72e9de9027!2z0IbQs9GA0LDRiNC60Lgg0KDQsNC00L7RgdGC0LjQvdC60Lg!5e0!3m2!1suk!2sua!4v1580894698653!5m2!1suk!2sua" width="750" height="500" frameborder="0" style="border:0;" allowfullscreen=""></iframe>      </div>
+                                                                                    <div class="modal-footer">
+                                                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрити</button>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="goods__recomended">
+                                                                <div class="goods__recomended-title">
+                                                                    <h3>Вам також сподобається</h3>
+                                                                </div>
+                                                                <div class="goods__recomended-items">
+                                                                    <a href= /goods?id=${data[3]['gsx$id']['$t']}>
                         <div class="goods__recomended-item border-bottom border-secondary">
-                            <div class="goods__recomended-item__image">
-                                <img src="${data[3].gsx$mainimage.$t}" alt="">
+                                                                        <div class="goods__recomended-item__image">
+                                                                            <img src="${data[3].gsx$mainimage.$t}" alt="">
                             </div>
-                            <div class="goods__recomended-item-name">
-                            ${data[3].gsx$name.$t}
+                                                                            <div class="goods__recomended-item-name">
+                                                                                ${data[3].gsx$name.$t}
+                                                                            </div>
+                                                                            <div class="goods__recomended-item-price">
+                                                                                ${data[3].gsx$cost.$t}грн.
                             </div>
-                            <div class="goods__recomended-item-price">
-                            ${data[3].gsx$cost.$t}грн.
-                            </div>
-                        </div>
+                                                                        </div>
                     </a>
-                    <a href = /goods?id=${data[4]['gsx$id']['$t']}>
+                                                                    <a href= /goods?id=${data[4]['gsx$id']['$t']}>
                         <div class="goods__recomended-item border-bottom border-secondary">
-                            <div class="goods__recomended-item__image">
-                                <img src="${data[4].gsx$mainimage.$t}" alt="">
+                                                                        <div class="goods__recomended-item__image">
+                                                                            <img src="${data[4].gsx$mainimage.$t}" alt="">
                             </div>
-                            <div class="goods__recomended-item-name">
-                            ${data[4].gsx$name.$t}
+                                                                            <div class="goods__recomended-item-name">
+                                                                                ${data[4].gsx$name.$t}
+                                                                            </div>
+                                                                            <div class="goods__recomended-item-price">
+                                                                                ${data[4].gsx$cost.$t}грн.
                             </div>
-                            <div class="goods__recomended-item-price">
-                            ${data[4].gsx$cost.$t}грн.
-                            </div>
-                        </div>
+                                                                        </div>
                     </a>
-                    <a href = /goods?id=${data[5]['gsx$id']['$t']}>
+                                                                    <a href= /goods?id=${data[5]['gsx$id']['$t']}>
                         <div class="goods__recomended-item border-bottom border-secondary">
-                            <div class="goods__recomended-item__image">
-                                <img src="${data[5].gsx$mainimage.$t}" alt="">
+                                                                        <div class="goods__recomended-item__image">
+                                                                            <img src="${data[5].gsx$mainimage.$t}" alt="">
                             </div>
-                            <div class="goods__recomended-item-name">
-                            ${data[5].gsx$name.$t}
+                                                                            <div class="goods__recomended-item-name">
+                                                                                ${data[5].gsx$name.$t}
+                                                                            </div>
+                                                                            <div class="goods__recomended-item-price">
+                                                                                ${data[5].gsx$cost.$t}грн.
                             </div>
-                            <div class="goods__recomended-item-price">
-                            ${data[5].gsx$cost.$t}грн.
-                            </div>
-                        </div>
+                                                                        </div>
                     </a>
-                    <a href = /goods?id=${data[6]['gsx$id']['$t']}>
+                                                                    <a href= /goods?id=${data[6]['gsx$id']['$t']}>
                         <div class="goods__recomended-item border-bottom border-secondary">
-                            <div class="goods__recomended-item__image">
-                                <img src="${data[6].gsx$mainimage.$t}" alt="">
+                                                                        <div class="goods__recomended-item__image">
+                                                                            <img src="${data[6].gsx$mainimage.$t}" alt="">
                             </div>
-                            <div class="goods__recomended-item-name">
-                            ${data[6].gsx$name.$t}
+                                                                            <div class="goods__recomended-item-name">
+                                                                                ${data[6].gsx$name.$t}
+                                                                            </div>
+                                                                            <div class="goods__recomended-item-price">
+                                                                                ${data[6].gsx$cost.$t}грн.
                             </div>
-                            <div class="goods__recomended-item-price">
-                            ${data[6].gsx$cost.$t}грн.
-                            </div>
-                        </div>
+                                                                        </div>
                     </a>
-                </div>
-            </div>`
+                                                                </div>
+                                                            </div>`
 
     return out;
 }
@@ -359,6 +417,7 @@ $(document).ready(function () {
 
 
     });
+
 });
 
 
@@ -388,3 +447,9 @@ function showSlides(n) {
     captionText.innerHTML = dots[slideIndex - 1].alt;
 };
 
+$(function () {
+    $("#main-form").submit(function (event) {
+        event.preventDefault();
+        $.post("/basket", $(this).serialize());
+    })
+})
