@@ -104,8 +104,8 @@ document.onclick = function (e) {
 
 /* REMOVE ALL ITEMS WITH MINI-BASKET */ 
 removeAlls.onclick = function () {
-    delete card;
     sessionStorage.clear();
+    card={};
     renderBasket();
     showTotals();
 }
@@ -220,7 +220,7 @@ function ShowGoods(data) {
     for (var key in data) {
         out += `<div>
         <a href = /goods?id=${data[key]['gsx$id']['$t']}> 
-         <div class="card card-deck self-item text-center border-1" style="width: 18rem; cursor:pointer;">
+         <div class="card  self-item text-center border-1" style="width: 18rem; cursor:pointer;">
          <img data="${data[key]['gsx$id']['$t']}" name="block" class="card-img-top" src="${data[key]['gsx$image']['$t']}" alt="${data[key]['gsx$name']['$t']}">
          <div class="card-body ">
          <h5  class="card-title">${data[key]['gsx$name']['$t']}</h5>
