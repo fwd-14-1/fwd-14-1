@@ -94,8 +94,22 @@ document.onclick = function (e) {
         document.getElementById(`count-${goods[selectedGoodsID]['gsx$id']['$t']}`).innerHTML = card[selectedGoodsID];
         document.getElementById(`item-cost-${goods[selectedGoodsID]['gsx$id']['$t']}`).innerHTML = goods[selectedGoodsID]['gsx$cost']['$t'] * card[selectedGoodsID] + "грн";
     }
+    else if (e.target.attributes.name.nodeValue == "removeOne") {
+        delete card[selectedGoodsID];
+        sessionStorage.setItem("card", JSON.stringify(card));
+        renderBasket();
+        showTotals();
+    }
 }
 
+/* REMOVE ALL ITEMS WITH MINI-BASKET */ 
+removeAlls.onclick = function () {
+    delete card;
+    sessionStorage.clear();
+    renderBasket();
+    showTotals();
+}
+/* END */ 
 
 /* GOODS CSS */
 
@@ -168,14 +182,15 @@ function renderBasket() {
     for (var item in card) {
         var out = ``;
         out += `<div class="commodity__contents">
-                            <img src="${goods[item]['gsx$image']['$t']}" alt="${goods[item]['gsx$name']['$t']}">
+                            <img class="image_content" src="${goods[item]['gsx$image']['$t']}" alt="${goods[item]['gsx$name']['$t']}">
                                 <div class="information__about__commodity">
                                     <a href="" class="link__on__commodity" title="Посилання на товар">${goods[item]['gsx$name']['$t']}</a>
                                     <div class="cost">
                                         <div class="price">${goods[item]['gsx$cost']['$t']} грн</div>
                                         <div class="number">${card[item]} шт.</div>
                                         <div class="full__price">${goods[item]['gsx$cost']['$t'] * card[item]} <span>грн</span></div></div></div>
-             </div>`;
+                                        <img class="remove" name = 'removeOne' data="${goods[item]['gsx$id']['$t']}" src="/public/img/delete.png">
+                                        </div>`;
         content.innerHTML += out;
         showTotals();
     }

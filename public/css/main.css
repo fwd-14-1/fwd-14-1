@@ -236,7 +236,7 @@ footer {
 /* Basket content */
 #mini-basket__hover_content {
   background: rgba(255, 255, 255); /* Підставиться під фон на сторінці */
-  width: 450px;
+  width: 500px;
   height: auto;
   display: none;
   position: absolute;
@@ -251,7 +251,7 @@ footer {
   margin-bottom: 10px;
 }
 
-.commodity img {
+.image_content {
   width: 60px;
   height: 60px;
   border-radius: 50%;
@@ -286,11 +286,17 @@ footer {
   align-items: center;
 }
 .full__price {
-  font-size: 30px;
+  font-size: 26px;
   font-weight: bold;
 }
 .full__price span {
   font-size: 16px;
+}
+.remove {
+  width: 25px;
+  height: 25px;
+  transform: translateY(30px);
+  cursor: pointer;
 }
 .conclusion {
   display: flex;
@@ -298,15 +304,20 @@ footer {
   align-items: center;
   margin-top: 10px;
 }
-.link__in__basket a {
-  text-decoration: none;
-  border-bottom: 1px dashed green;
-  color: green;
+.clearAll {
+  font-weight: bold;
+  border: none;
+  border-radius: 30px;
+  padding: 5px 10px;
+  background-color: black;
+  color: white;
   transition: 0.3s ease;
+  cursor: pointer;
+  outline: none !important;
 }
-.link__in__basket a:hover {
-  color: blueviolet;
-  border-bottom: 1px dashed blueviolet;
+.clearAll:hover {
+  color: black;
+  background-color: white;
 }
 #mainPrice {
   font-size: 30px;
