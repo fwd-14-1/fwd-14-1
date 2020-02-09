@@ -22,44 +22,28 @@
         <div class="container">
             <div class="header__navbar" id="hidden-header">
                 <div class="header__logo">
-                    <h1> Радостинки</h1>
+                    <a href="/index">
+                        <h1> Радостинки</h1>
+                    </a>
                 </div>
                 <div class="header__list">
-                    <ul>
-                        <li><a href="/">Головна</a></li>
-                    </ul>
+
                     <div id="mini-basket">
                         <div id="mini-basket__background">
                             <div id="mini-basket__link">
                             </div>
                             <div id="mini-basket__hover_content">
-                                <div class="title">
-                                    Корзина
-                                </div>
-                                <div class="commodity">
-                                    <img src="../public/img/mouse/DSC_7643.JPG" alt="">
-                                    <div class="information__about__commodity">
-                                        <a href="" class="link__on__commodity" title="Посилання на товар">Mouse</a>
-                                        <div class="cost">
-                                            <div class="price">
-                                                500 грн
-                                            </div>
-                                            <div class="number">
-                                                1 шт.
-                                            </div>
-                                            <div class="full__price">
-                                                500 <span>грн</span>
-                                            </div>
-                                        </div>
+                                <a href="/basket">
+                                    <div class="title">
+                                        Корзина
                                     </div>
+                                </a>
+                                <div class="commodity">
+
                                 </div>
                                 <div class="conclusion">
-                                    <div class="link__in__basket">
-                                        <a href="">В корзину</a>
-                                    </div>
-                                    <div class="main__price">
-                                        1000 <span>грн</span>
-                                    </div>
+                                    <button class="clearAll" id="removeAlls" name="removeAll">Очистити</button>
+                                    <div id="mainPrice">0 грн</div>
                                     <div class="registration">
                                         <a href="">Оформити</a>
                                     </div>
@@ -74,33 +58,18 @@
     <main class="big-basket">
         <div class="basket-container">
             <h1 class="page-title">Корзина</h1>
-            <button class="clean-basket"> Очистити Корзину</button>
-            <hr>
-            <div class="basket-view-container">
-                <div class="basket-view">
-                    <div class="item-photo">
-                        <img src="../public/img/mouse/DSC_7643.JPG" alt=""></div>
-                    <div class="card-product-info">
-                        <div>Mouse</div>
-                        <div>Артикул : CB001</div>
-                    </div>
-                    <div class="card-product-count">
-                        <button>+</button>
-                        <div>1</div>
-                        <button>-</button>
-                    </div>
-                    <div class="item-cost">500 грн</div>
-                    <div class="delete-item">
-                        <img src="../public/img/delete.png" alt=""></div>
-                </div>
+            <button class="clean-basket" id="removeBasket"> Очистити Корзину</button>
+            
+            <div id="basketContent">
+
             </div>
-            <hr>
+
         </div>
         <div class="make-order-container">
             <div class="make-order">
                 <span>Оформити замовлення</span>
             </div>
-            <form method="POST" action="basket" >
+            <form method="POST" id="main-form">
                 <div class="card-form-container">
                     <div class="card-form">
                         <div class="card__form-data">
@@ -109,40 +78,36 @@
                                 <input placeholder="Введите ПІБ" value="" name="fullname">
                             </div>
                             <div class="card-input-wrapper">
-                                <input placeholder="Введіть номер телефону" type="tel" value="+380" maxlength="13" name="tel"
-                                    minlength="13">
+                                <input placeholder="Введіть номер телефону" type="tel" value="+380" maxlength="13"
+                                    name="tel" minlength="13">
                             </div>
                         </div>
                         <div class="card__form-data">
                             <div class="card__form-label">Доставка</div>
                             <div class="card-input-wrapper">
-                                <input type="text"  list="exampleList" placeholder="Виберіть з списку" name="delivery"> 
+                                <input type="text" list="exampleList" placeholder="Виберіть з списку" name="delivery">
                                 <datalist id="exampleList">
                                     <option>Нова Пошта</option>
                                     <option>Укрпошта</option>
                                 </datalist></div>
                             <div class="card-input-wrapper">
-                                <input type="text"  name="region"
-                                    placeholder="Введіть область доставки">
-                              
-                            <div class="card-input-wrapper">
-                                <input type="text"  name="town"
-                                    placeholder="Введіть місто доставки">
-                                
-                            </div>
-                            <div class="card-input-wrapper">
-                                <input type="text" name="vid"
-                                    placeholder="Введіть відділення для доставки">
-                               
+                                <input type="text" name="region" placeholder="Введіть область доставки">
+
+                                <div class="card-input-wrapper">
+                                    <input type="text" name="town" placeholder="Введіть місто доставки">
+
+                                </div>
+                                <div class="card-input-wrapper">
+                                    <input type="text" name="vid" placeholder="Введіть відділення для доставки">
+
+                                </div>
                             </div>
                         </div>
+                        <div id="basketData">
+                        </div>
                     </div>
-                    <div class="card-input-wrapper">
-                        <input placeholder="Коментарій до замовлення" value="" name="comment">
-                    </div>
-                </div>
-                <button type="submit" class="main-button"
-                    style="background-color: rgb(0, 0, 0); color: rgb(255, 255, 255);">Оформити замовлення</button>
+                    <button type="submit" class="main-button" id="main-button"
+                        style="background-color: rgb(0, 0, 0); color: rgb(255, 255, 255);">Оформити замовлення</button>
             </form>
         </div>
     </main>
@@ -158,8 +123,8 @@
                 </div>
                 <div class="right-side">
                     <nav class="navigation">
-                        <a href="#" class="navigation__item">About</a>
-                        <a href="#" class="navigation__item without">Contact</a>
+                        <a class="navigation__item without" href="https://www.instagram.com/radostinki_toys/?hl=uk" target="_blank"><i class="fa fa-instagram fa-3x" aria-hidden="true"></i></a> 
+                        <a class="navigation__item without" href="https://www.facebook.com/pg/radostinki.toys/posts/" target="_blank"><i class="fa fa-facebook-square fa-3x" aria-hidden="true"></i></a>
                     </nav>
                     <div class="text">
                         Design by fwd-14
@@ -171,6 +136,7 @@
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"
         integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
     <script src="public/scripts/main.js"></script>
+    <script src="https://use.fontawesome.com/9a22e10dc5.js"></script>
 </body>
 
 </html>

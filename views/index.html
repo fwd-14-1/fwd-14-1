@@ -11,7 +11,6 @@
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="public/css/main.css">
     <link rel="stylesheet" href="public/css/media.css">
-    <link rel="shortcut icon" href="public/img/title_icon.png" type="image/png">
     <title>Радостинки</title>
 </head>
 
@@ -20,7 +19,9 @@
         <div class="container">
             <div class="header__navbar" id="hidden-header">
                 <div class="header__logo">
-                    <h1> Радостинки</h1>
+                    <a href="/index">
+                        <h1> Радостинки</h1>
+                    </a>
                 </div>
                 <div class="header__list">
                     <div id="mini-basket">
@@ -28,18 +29,17 @@
                             <div id="mini-basket__link">
                             </div>
                             <div id="mini-basket__hover_content">
-                                <div class="title">
-                                    Корзина
-                                </div>
+                                <a href="/basket">
+                                    <div class="title">
+                                        Корзина
+                                    </div>
+                                </a>
                                 <div class="commodity">
 
                                 </div>
                                 <div class="conclusion">
-                                    <div class="link__in__basket">
-                                        <a href="/basket">В корзину</a>
-                                    </div>
-                                    <div id="mainPrice">
-                                    </div>
+                                    <button class="clearAll" id="removeAlls" name="removeAll">Очистити</button>
+                                    <div id="mainPrice">0 грн</div>
                                     <div class="registration">
                                         <a href="/basket">Оформити</a>
                                     </div>
@@ -59,7 +59,7 @@
     <main name="goods">
         <h2 class="items-header text-center">Товари</h2>
         <hr>
-        <div class="items card-group " id="goods">
+        <div class="items " id="goods">
         </div>
     </main>
     <hr>
@@ -90,8 +90,10 @@
                 </div>
                 <div class="right-side">
                     <nav class="navigation">
-                        <a href="#" class="navigation__item">About</a>
-                        <a href="#" class="navigation__item without">Contact</a>
+                        <a class="navigation__item without" href="https://www.instagram.com/radostinki_toys/?hl=uk"
+                            target="_blank"><i class="fa fa-instagram fa-3x" aria-hidden="true"></i></a>
+                        <a class="navigation__item without" href="https://www.facebook.com/pg/radostinki.toys/posts/"
+                            target="_blank"><i class="fa fa-facebook-square fa-3x" aria-hidden="true"></i></a>
                     </nav>
                     <div class="text">
                         Design by fwd-14
@@ -103,6 +105,8 @@
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"
         integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
     <script src="public/scripts/main.js"></script>
+    <script src="https://use.fontawesome.com/9a22e10dc5.js"></script>
+
 </body>
 
 </html>

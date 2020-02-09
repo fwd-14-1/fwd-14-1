@@ -9,6 +9,7 @@
         integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="stylesheet" href="../public/css/main.css">
     <link rel="stylesheet" href="../public/css/media.css">
+    <link rel="shortcut icon" href="public/img/title_icon.png" type="image/png">
     <link href="https://fonts.googleapis.com/css?family=Comfortaa:400,600,700&display=swap" rel="stylesheet">
 
     <title>Goods</title>
@@ -19,46 +20,29 @@
         <div class="container">
             <div class="header__navbar" id="hidden-header">
                 <div class="header__logo">
-                    <h1> Радостинки</h1>
+                    <a href="/index">
+                        <h1> Радостинки</h1>
+                    </a>
                 </div>
                 <div class="header__list">
-                    <ul>
-                        <li><a href="/index">Головна</a></li>
-                    </ul>
+
                     <div id="mini-basket">
                         <div id="mini-basket__background">
                             <div id="mini-basket__link">
                             </div>
                             <div id="mini-basket__hover_content">
-                                <div class="title">
-                                    Корзина
-                                </div>
-                                <div class="commodity">
-                                    <img src="../public/img/mouse/DSC_7643.JPG" alt="">
-                                    <div class="information__about__commodity">
-                                        <a href="" class="link__on__commodity" title="Посилання на товар">Mouse</a>
-                                        <div class="cost">
-                                            <div class="price">
-                                                500 грн
-                                            </div>
-                                            <div class="number">
-                                                1 шт.
-                                            </div>
-                                            <div class="full__price">
-                                                500 <span>грн</span>
-                                            </div>
-                                        </div>
+                                <a href="/basket">
+                                    <div class="title">
+                                        Корзина
                                     </div>
+                                </a>
+                                <div class="commodity">
                                 </div>
                                 <div class="conclusion">
-                                    <div class="link__in__basket">
-                                        <a href="">В корзину</a>
-                                    </div>
-                                    <div class="main__price">
-                                        1000 <span>грн</span>
-                                    </div>
+                                    <button class="clearAll" id="removeAlls" name="removeAll">Очистити</button>
+                                    <div id="mainPrice">0 грн</div>
                                     <div class="registration">
-                                        <a href="">Оформити</a>
+                                        <a href="/basket">Оформити</a>
                                     </div>
                                 </div>
                             </div>
@@ -84,8 +68,8 @@
                 </div>
                 <div class="right-side">
                     <nav class="navigation">
-                        <a href="#" class="navigation__item">About</a>
-                        <a href="#" class="navigation__item without">Contact</a>
+                        <a class="navigation__item without" href="https://www.instagram.com/radostinki_toys/?hl=uk" target="_blank"><i class="fa fa-instagram fa-3x" aria-hidden="true"></i></a> 
+                        <a class="navigation__item without" href="https://www.facebook.com/pg/radostinki.toys/posts/" target="_blank"><i class="fa fa-facebook-square fa-3x" aria-hidden="true"></i></a>
                     </nav>
                     <div class="text">
                         Design by fwd-14
@@ -105,6 +89,8 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
         integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
         crossorigin="anonymous"></script>
+        <script src="https://use.fontawesome.com/9a22e10dc5.js"></script>
+
 </body>
 
 </html>

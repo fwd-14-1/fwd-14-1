@@ -1,12 +1,17 @@
 window.onload = function () {
     card = {};
     goods = {};
+
+
+    /* GETTING DATA FROM STORAGE*/
     function loadCardFromStorage() {
-        if (localStorage.getItem('card') != undefined) {
-            card = JSON.parse(localStorage.getItem('card'));
+        if (sessionStorage.getItem('card') != undefined) {
+            card = JSON.parse(sessionStorage.getItem('card'));
         }
     }
     loadCardFromStorage();
+    /* END */
+
     selectedGoodsID = '';
     let getJSON = function (url, callback) {
         let xhr = new XMLHttpRequest();
@@ -25,7 +30,6 @@ window.onload = function () {
     }
 
     getJSON('https://spreadsheets.google.com/feeds/list/1bLe6_mQakrnM6NCYyQr8llzPNo8C0jDOFXeluF7nx3E/od6/public/values?alt=json', function (err, data) {
-        console.log(data);
         if (err != null) {
             console.log('Error:');
         }
@@ -41,20 +45,92 @@ window.onload = function () {
             else if (document.getElementById('goods-content')) {
                 document.getElementById('goods-content').innerHTML = ShowOneItem(data);
                 renderBasket();
+            }
+            else if (document.getElementById('basketContent')) {
+                document.getElementById('basketContent').innerHTML = showBasketContent(data);
+                document.getElementById('basketData').innerHTML = `<textarea value="" name="comment">${insertData()}</textarea>`;
 
+                renderBasket();
             }
         }
     });
 }
+
+/* INSERT DATA INTO HIDDEN INPUT*/
+function insertData() {
+    var out = "";
+    for (var item in card) {
+        out += `${goods[item]['gsx$name']['$t']} : ${card[item]} шт    `;
+    }
+    return out;
+}
+/* END */
+
+
+/*  */
+
 document.onclick = function (e) {
-    console.log(selectedGoodsID);
     selectedGoodsID = e.target.attributes.data.nodeValue;
     if (e.target.attributes.name.nodeValue == "add_to_card") {
         addToBasket(selectedGoodsID);
     }
     else if (e.target.attributes.name.nodeValue == "block") {
-        ShowOneItem(goods)
+        ShowOneItem(goods);
     }
+    else if (e.target.attributes.name.nodeValue == "card_add") {
+        addToBasket(selectedGoodsID);
+        document.getElementById(`count-${goods[selectedGoodsID]['gsx$id']['$t']}`).innerHTML = card[selectedGoodsID];
+        document.getElementById(`item-cost-${goods[selectedGoodsID]['gsx$id']['$t']}`).innerHTML = goods[selectedGoodsID]['gsx$cost']['$t'] * card[selectedGoodsID] + "грн";
+    }
+    else if (e.target.attributes.name.nodeValue == "card_delete") {
+        delete card[selectedGoodsID];
+        sessionStorage.setItem("card", JSON.stringify(card));
+        renderBasket();
+        document.getElementById(`del-${goods[selectedGoodsID]['gsx$id']['$t']}`).innerHTML = "";
+    }
+    else if (e.target.attributes.name.nodeValue == "card_delete_one") {
+        removeFromBasket(selectedGoodsID);
+        renderBasket();
+        document.getElementById(`count-${goods[selectedGoodsID]['gsx$id']['$t']}`).innerHTML = card[selectedGoodsID];
+        document.getElementById(`item-cost-${goods[selectedGoodsID]['gsx$id']['$t']}`).innerHTML = goods[selectedGoodsID]['gsx$cost']['$t'] * card[selectedGoodsID] + "грн";
+    }
+    else if (e.target.attributes.name.nodeValue == "removeOne") {
+        delete card[selectedGoodsID];
+        sessionStorage.setItem("card", JSON.stringify(card));
+        document.getElementById('basketContent').innerHTML = showBasketContent(goods);
+        renderBasket();
+        showTotals();
+    }
+}
+
+/* REMOVE ALL ITEMS WITH MINI-BASKET */ 
+removeAlls.onclick = function () {
+    sessionStorage.clear();
+    card={};
+    document.getElementById("mainPrice").textContent = "";
+    renderBasket();
+    document.getElementById('basketContent').innerHTML = showBasketContent(goods);
+}
+
+/* END */ 
+
+/* GOODS CSS */
+
+
+/* CHANGE THE STORAGE DATA CSS */
+function removeFromBasket(elem) {
+    if (card[elem] != 1) {
+        card[elem]--;
+    }
+    else {
+        document.getElementById(`del-${goods[selectedGoodsID]['gsx$id']['$t']}`).innerHTML = "";
+        delete card[selectedGoodsID];
+        sessionStorage.setItem("card", JSON.stringify(card));
+        renderBasket();
+
+    }
+    sessionStorage.setItem("card", JSON.stringify(card));
+    renderBasket();
 }
 
 function addToBasket(elem) {
@@ -64,27 +140,64 @@ function addToBasket(elem) {
     else {
         card[elem] = 1;
     }
-    console.log(card);
-    localStorage.setItem("card", JSON.stringify(card));
-
+    sessionStorage.setItem("card", JSON.stringify(card));
     renderBasket();
 }
+/* END*/
 
+
+/* ADDING CONTENT INTO BASKET PAGE */
+function showBasketContent(goods) {
+    var out = ``;
+    if (card != undefined){
+    for (var item in card) {
+        out += `<div class="basket-view-container" id ="del-${goods[item]['gsx$id']['$t']}">
+            <div class="basket-view">
+                <div class="item-photo">
+                    <img src="${goods[item]['gsx$image']['$t']}" alt="${goods[item]['gsx$name']['$t']}"></div>
+                    <div class="card-product-info">
+                        <div>${goods[item]['gsx$name']['$t']}</div>
+                        <div>${goods[item]['gsx$article']['$t']}</div>
+                    </div>
+                    <div class="card-product-count">
+                        <button name='card_add' data="${goods[item]['gsx$id']['$t']}" >+</button>
+                        <div id="count-${goods[item]['gsx$id']['$t']}">${card[item]}</div>
+                        <button name='card_delete_one' data="${goods[item]['gsx$id']['$t']}" id="add">-</button>
+                    </div>
+                    <div id = "item-cost-${goods[item]['gsx$id']['$t']}" class="item-cost">${goods[item]['gsx$cost']['$t'] * card[item]} грн</div>
+                    <div class="delete-item">
+                        <button>
+                            <img src="../public/img/delete.png" alt="" name='card_delete' data="${goods[item]['gsx$id']['$t']}"></div>
+                        </button>
+                    </div>
+                
+               </div>`;
+    }
+    return out;
+}
+else{
+    return "";}
+}
+/*END*/
+
+
+/* MINI BASKET CSS */
 function renderBasket() {
     var content = document.querySelector('.commodity');
     var contentprice = document.getElementById('mainPrice');
     content.innerHTML = "";
     for (var item in card) {
         var out = ``;
-        out += `<div class= "commodity__contents">
-             <img src="${goods[item]['gsx$image']['$t']}" alt="${goods[item]['gsx$name']['$t']}">` +
-            `<div class="information__about__commodity">` +
-            `<a href="" class="link__on__commodity" title="Посилання на товар">${goods[item]['gsx$name']['$t']}</a>` +
-            `<div class="cost">` +
-            `<div class="price">${goods[item]['gsx$cost']['$t']} грн</div>` +
-            `<div class="number">${card[item]} шт.</div>` +
-            `<div class="full__price">${goods[item]['gsx$cost']['$t'] * card[item]} <span>грн</span></div></div></div>
-             </div>`;
+        out += `<div class="commodity__contents">
+                            <img class="image_content" src="${goods[item]['gsx$image']['$t']}" alt="${goods[item]['gsx$name']['$t']}">
+                                <div class="information__about__commodity">
+                                    <a href="" class="link__on__commodity" title="Посилання на товар">${goods[item]['gsx$name']['$t']}</a>
+                                    <div class="cost">
+                                        <div class="price">${goods[item]['gsx$cost']['$t']} грн</div>
+                                        <div class="number">${card[item]} шт.</div>
+                                        <div class="full__price">${goods[item]['gsx$cost']['$t'] * card[item]} <span>грн</span></div></div></div>
+                                        <img class="remove" name = 'removeOne' data="${goods[item]['gsx$id']['$t']}" src="/public/img/delete.png">
+                                        </div>`;
         content.innerHTML += out;
         showTotals();
     }
@@ -105,29 +218,34 @@ function showTotals() {
 
     document.getElementById("mainPrice").textContent = finalMoney;
 }
+/* END */
+
 
 
 function ShowGoods(data) {
     var out = '';
     for (var key in data) {
-        out += `<div>`
-        out += `<a href = /goods?id=${data[key]['gsx$id']['$t']}> `;
-        out += `<div class="card card-deck self-item text-center border-1" style="width: 18rem; cursor:pointer;">`;
-        out += `<img data="${data[key]['gsx$id']['$t']}" name="block" class="card-img-top" src="${data[key]['gsx$image']['$t']}" alt="${data[key]['gsx$name']['$t']}">`;
-        out += `<div class="card-body ">`;
-        out += `<h5  class="card-title">${data[key]['gsx$name']['$t']}</h5>`;
-        out += `<p class="card-text ">${data[key]['gsx$cost']['$t']}грн</p>`;
-        out += `<p class="card-text">${data[key]['gsx$description']['$t']}</p>`
-        out += `</div>`;
-        out += `</a>`;
-        out += `<button type="button" class="btn btn-outline-info" data="${data[key]['gsx$id']['$t']}" name="add_to_card">Купити</button>`;
-        out += `</div>`;
-        out += `</div>`;
+        out += `<div>
+        <a href = /goods?id=${data[key]['gsx$id']['$t']}> 
+         <div class="card  self-item text-center border-1" style="width: 18rem; cursor:pointer;">
+         <img data="${data[key]['gsx$id']['$t']}" name="block" class="card-img-top" src="${data[key]['gsx$image']['$t']}" alt="${data[key]['gsx$name']['$t']}">
+         <div class="card-body ">
+         <h5  class="card-title">${data[key]['gsx$name']['$t']}</h5>
+         <p class="card-text ">${data[key]['gsx$cost']['$t']}грн</p>
+         <p class="card-text">${data[key]['gsx$description']['$t']}</p>
+         </div>
+         </a>
+         <button type="button" class="btn btn-outline-info" data="${data[key]['gsx$id']['$t']}" name="add_to_card">Купити</button>
+         </div>
+         </div>`;
     }
     return out;
 }
 var idElement = [];
 var urlParams = new URLSearchParams(window.location.search);
+
+
+
 // Take ID FROM URL
 function ShowOneItem(data) {
     const test = data.find((item) => {
@@ -164,38 +282,38 @@ function ShowOneItem(data) {
     var out = '';
 
     out += `<div class="goods__flex">
-                <div class="goods__photos">
-                <div class="mySlides" style="display: block;">
-                    <img src="${test.gsx$mainimage.$t}" style="width:100%">
+                                <div class="goods__photos">
+                                    <div class="mySlides" style="display: block;">
+                                        <img src="${test.gsx$mainimage.$t}" style="width:100%">
                 </div>
-                    <div class="mySlides">
-                        <img src="${test.gsx$imageone.$t}" style="width:100%">
+                                        <div class="mySlides">
+                                            <img src="${test.gsx$imageone.$t}" style="width:100%">
                  </div>
 
-                <div class="mySlides">
-                    <img src="${test.gsx$imagetwo.$t}" style="width:100%">
+                                            <div class="mySlides">
+                                                <img src="${test.gsx$imagetwo.$t}" style="width:100%">
                 </div>
 
-                <div class="mySlides">
-                    <img src="${test.gsx$imagethree.$t}" style="width:100%">
+                                                <div class="mySlides">
+                                                    <img src="${test.gsx$imagethree.$t}" style="width:100%">
                 </div>
 
-                <div class="caption-container">
-                    <p id="caption">${test.gsx$name.$t}</p>
-                </div>
+                                                    <div class="caption-container">
+                                                        <p id="caption">${test.gsx$name.$t}</p>
+                                                    </div>
 
-                <div class="row">
-                    <div class="column">
-                        <img class="demo cursor" src="${test.gsx$mainimage.$t}" style="width:100%" onclick="currentSlide(1)" alt="${test.gsx$name.$t}">
+                                                    <div class="row">
+                                                        <div class="column">
+                                                            <img class="demo cursor" src="${test.gsx$mainimage.$t}" style="width:100%" onclick="currentSlide(1)" alt="${test.gsx$name.$t}">
                     </div>
-                    <div class="column">
-                        <img class="demo cursor" src="${test.gsx$imageone.$t}" style="width:100%" onclick="currentSlide(2)" alt="${test.gsx$name.$t}">
+                                                            <div class="column">
+                                                                <img class="demo cursor" src="${test.gsx$imageone.$t}" style="width:100%" onclick="currentSlide(2)" alt="${test.gsx$name.$t}">
                     </div>
-                        <div class="column">
-                        <img class="demo cursor" src="${test.gsx$imagetwo.$t}" style="width:100%" onclick="currentSlide(3)" alt="${test.gsx$name.$t}">
+                                                                <div class="column">
+                                                                    <img class="demo cursor" src="${test.gsx$imagetwo.$t}" style="width:100%" onclick="currentSlide(3)" alt="${test.gsx$name.$t}">
                     </div>
-                    <div class="column">
-                        <img class="demo cursor" src="${test.gsx$imagethree.$t}" style="width:100%" onclick="currentSlide(4)" alt="${test.gsx$name.$t}">
+                                                                    <div class="column">
+                                                                        <img class="demo cursor" src="${test.gsx$imagethree.$t}" style="width:100%" onclick="currentSlide(4)" alt="${test.gsx$name.$t}">
                     </div>
                 </div>
             </div>
@@ -212,39 +330,40 @@ function ShowOneItem(data) {
                 <div class="goods__links">
                     <a href="#" class="first__link" data-toggle="modal" data-target="#staticBackdrop">Доставка і оплата</a>
                     <!-- Modal -->
+
                     <div class="modal fade" id="staticBackdrop" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="#staticBackdrop"
-                    aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">Доставка і оплата</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    <h3>Доставка:</h3>
-                                    <ul>
-                                        <li>Нова пошта (до відділення/до дверей)</li>
-                                        <li>Самовивіз / Особиста зустріч</li>
-                                        <li>Укрпошта</li>
-                                    </ul>
-                                    <h3>Способи оплати:</h3>
-                                    <ul>
-                                        <li>Готівковий</li>
-                                        <li>Банківський переказ</li>
-                                        <li>При доставці товару</li>
-                                        <li>Visa/Mastercard</li>
-                                    </ul>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрити</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <a href="#" class="second__link" data-toggle="modal" data-target=".bd-example-modal-lg">Наявність в магазині</a>
-                    <!-- Modal -->
+                                                                            aria-hidden="true">
+                                                                            <div class="modal-dialog" role="document">
+                                                                                <div class="modal-content">
+                                                                                    <div class="modal-header">
+                                                                                        <h5 class="modal-title" id="exampleModalLabel">Доставка і оплата</h5>
+                                                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                                            <span aria-hidden="true">&times;</span>
+                                                                                        </button>
+                                                                                    </div>
+                                                                                    <div class="modal-body">
+                                                                                        <h3>Доставка:</h3>
+                                                                                        <ul>
+                                                                                            <li>Нова пошта (до відділення/до дверей)</li>
+                                                                                            <li>Самовивіз / Особиста зустріч</li>
+                                                                                            <li>Укрпошта</li>
+                                                                                        </ul>
+                                                                                        <h3>Способи оплати:</h3>
+                                                                                        <ul>
+                                                                                            <li>Готівковий</li>
+                                                                                            <li>Банківський переказ</li>
+                                                                                            <li>При доставці товару</li>
+                                                                                            <li>Visa/Mastercard</li>
+                                                                                        </ul>
+                                                                                    </div>
+                                                                                    <div class="modal-footer">
+                                                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрити</button>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <a href="#" class="second__link" data-toggle="modal" data-target=".bd-example-modal-lg">Наявність в магазині</a>
+                                                                        <!-- Modal -->
                     <div class="modal fade bd-example-modal-lg" id="exampleModalScrollable" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
                         <div class="modal-dialog modal-dialog modal-lg modal-dialog-scrollable" role="document">
                             <div class="modal-content">
@@ -293,8 +412,9 @@ function ShowOneItem(data) {
                             </div>
                             <div class="goods__recomended-item-price">
                             ${data[unicIdArr[1]].gsx$cost.$t}грн.
+
                             </div>
-                        </div>
+                                                                        </div>
                     </a>
                     <a href = /goods?id=${data[unicIdArr[2]]['gsx$id']['$t']}>
                         <div class="goods__recomended-item border-bottom border-secondary">
@@ -319,14 +439,18 @@ function ShowOneItem(data) {
                             </div>
                             <div class="goods__recomended-item-price">
                             ${data[unicIdArr[3]].gsx$cost.$t}грн.
+
                             </div>
-                        </div>
+                                                                        </div>
                     </a>
-                </div>
-            </div>`
+                                                                </div>
+                                                            </div>`
 
     return out;
 }
+
+/* MINI BASKET ON MOUSEIN */
+
 
 function MiniBasket() {
     var self = this;
@@ -364,13 +488,14 @@ MiniBasket.prototype.Hide = function () {
 
 var minibasket = new MiniBasket();
 
+/* END */
 
 
+
+/* HEADER FIXED FUNCTION  */
 
 $(document).ready(function () {
     const $window = $(window);
-
-
     $(window).scroll(function () {
         if ($(window).scrollTop() >= $window.height()) {
             $('#hidden-header').css({
@@ -382,7 +507,10 @@ $(document).ready(function () {
         }
     });
 });
+/* END */
 
+
+/* Sliden on goods page */
 
 function plusSlides(n) {
     showSlides(slideIndex += n);
@@ -409,4 +537,14 @@ function showSlides(n) {
     dots[slideIndex - 1].className += " active";
     captionText.innerHTML = dots[slideIndex - 1].alt;
 };
+/* END */
 
+
+/* SENDING DATA FOR NODEJS */
+$(function () {
+    $("#main-form").submit(function (event) {
+        event.preventDefault();
+        $.post("/basket", $(this).serialize());
+    })
+})
+/* END */

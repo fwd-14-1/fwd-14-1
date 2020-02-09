@@ -37,31 +37,32 @@ app.post('/basket', function (req, res) {
   });
 
 
-console.log(req.body);
+  console.log(req.body);
   var mailOptions = {
     from: 'fwd14fwd@gmail.com',
     to: 'fwd14fwd@gmail.com',
     subject: "Замовлення",
-    html: `<p>ПІБ${req.body['fullname']}]</p><br>`+
-    `Телефон : ${req.body.tel}<br>`+
-    `Тип доставки: ${req.body.delivery}<br>`+
-    `Область:${req.body.region}<br>`+
-    `Місто:${req.body.town}<br>`+
-    `Відділення:${req.body.vid}<br>`+
-    `Кометарій:${req.body.comment}<br>`
+    html: `<p>ПІБ${req.body['fullname']}]</p><br>` +
+      `Телефон : ${req.body.tel}<br>` +
+      `Тип доставки: ${req.body.delivery}<br>` +
+      `Область:${req.body.region}<br>` +
+      `Місто:${req.body.town}<br>` +
+      `Відділення:${req.body.vid}<br>` +
+      `Замовлення:${req.body.comment}<br>`
 
 
   };
   transporter.sendMail(mailOptions, function (error, info) {
     if (error) {
-      res.redirect('basket');
+      res.send();
     } else {
       console.log('Email sent: ' + info.response);
-      res.redirect('basket');
+      res.end();
+
     }
   });
 }
 
 );
 
-app.listen(3002);
+app.listen(3000);
