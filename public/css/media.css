@@ -104,9 +104,8 @@
 }
 
 @media screen and (max-width: 560px) {
-  .header__logo h1 {
-    display: none;
-  }
+  .header {
+background-position: center;  }
   .header__list ul {
     padding: 0;
   }
@@ -114,7 +113,6 @@
     justify-content: center;
   }
   .header__text {
-    padding: 150px 0 240px;
     font-size: 30px;
     line-height: 65px;
   }
