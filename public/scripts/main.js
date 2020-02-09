@@ -97,8 +97,10 @@ document.onclick = function (e) {
     else if (e.target.attributes.name.nodeValue == "removeOne") {
         delete card[selectedGoodsID];
         sessionStorage.setItem("card", JSON.stringify(card));
-        document.getElementById('basketContent').innerHTML = showBasketContent(goods);
         renderBasket();
+        if(document.getElementById('basketContent')){
+        document.getElementById('basketContent').innerHTML = showBasketContent(goods);}
+        document.getElementById("mainPrice").textContent = "";
         showTotals();
     }
 }
@@ -111,7 +113,6 @@ removeAlls.onclick = function () {
     renderBasket();
     document.getElementById('basketContent').innerHTML = showBasketContent(goods);
 }
-
 /* END */ 
 
 /* GOODS CSS */
