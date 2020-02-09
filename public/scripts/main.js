@@ -325,7 +325,7 @@ function ShowOneItem(data) {
                     <h3>${test.gsx$extradescription.$t}</h3>
                 </div>
                 <div class="goods__buttons">
-                    <a href="#"><button class="first__btn">Добавити до корзини</button></a>
+                    <a href="#"><button class="first__btn" data="${test['gsx$id']['$t']}" name="add_to_card">Добавити до корзини</button></a>
                     <a href="/basket"><button class="second__btn">Купити в один клік</button></a>
                 </div>
                 <div class="goods__links">
