@@ -131,43 +131,35 @@ var urlParams = new URLSearchParams(window.location.search);
 // Take ID FROM URL
 function ShowOneItem(data) {
     const test = data.find((item) => {
-        console.log(item)
-        console.log(data)
-        return item.gsx$id.$t === urlParams.get('id')
+        return item.gsx$id.$t === urlParams.get('id');
     });
-
+    // PUSH ID TO THE ARR
     function takenId() {
         for (var key in data) {
             idElement.push(data[key].gsx$id.$t);
         }
-        console.log(idElement)
     }
+
     takenId()
 
-    var unicArr = [];
+    // RANDOMIZE THE ARR
+    var unicIdArr = getUnicIdArr(idElement, 4);
 
-    var i = 0;
-    do {
-        var test = getRandomInt(Math.max(...idElement));
-        console.log("first" , test, unicArr)
-        if (unicArr.includes(test)) return
-        unicArr.push(test)
-        i++;
-        console.log("second", test)
-        
-    } while (unicArr.length < 4);
+    function getUnicIdArr(arr, unicArrlength) {
+        var unicIdArr = [];
+        do {
+            var randomId = getRandomInt(Math.max(...arr)) + '';
+            if (!unicIdArr.includes(randomId) && arr.includes(randomId)) {
+                unicIdArr.push(randomId);
+            };
+        } while (unicIdArr.length < unicArrlength);
 
-    console.log(unicArr);
+        return unicIdArr
 
-    function getRandomInt(max) {
-        return Math.floor(Math.random() * Math.floor(max));
+        function getRandomInt(max) {
+            return Math.floor(Math.random() * Math.floor(max));
+        }
     }
-
-    var one = unicArr[0];
-    var two = unicArr[1];
-    var three = unicArr[2];
-    var four = unicArr[3];
-    console.log(one, two, three, four)
 
     var out = '';
 
@@ -214,7 +206,7 @@ function ShowOneItem(data) {
                     <h3>${test.gsx$extradescription.$t}</h3>
                 </div>
                 <div class="goods__buttons">
-                    <button class="first__btn">Добавити до корзини</button>
+                    <a href="#"><button class="first__btn">Добавити до корзини</button></a>
                     <a href="/basket"><button class="second__btn">Купити в один клік</button></a>
                 </div>
                 <div class="goods__links">
@@ -278,55 +270,55 @@ function ShowOneItem(data) {
                     <h3>Вам також сподобається</h3>
                 </div>
                 <div class="goods__recomended-items">
-                    <a href = /goods?id=${data[3]['gsx$id']['$t']}>
+                    <a href = /goods?id=${data[unicIdArr[0]]['gsx$id']['$t']}>
                         <div class="goods__recomended-item border-bottom border-secondary">
                             <div class="goods__recomended-item__image">
-                                <img src="${data[3].gsx$mainimage.$t}" alt="">
+                                <img src="${data[unicIdArr[0]].gsx$mainimage.$t}" alt="">
                             </div>
                             <div class="goods__recomended-item-name">
-                            ${data[3].gsx$name.$t}
+                            ${data[unicIdArr[0]].gsx$name.$t}
                             </div>
                             <div class="goods__recomended-item-price">
-                            ${data[3].gsx$cost.$t}грн.
+                            ${data[unicIdArr[0]].gsx$cost.$t}грн.
                             </div>
                         </div>
                     </a>
-                    <a href = /goods?id=${data[4]['gsx$id']['$t']}>
+                    <a href = /goods?id=${data[unicIdArr[1]]['gsx$id']['$t']}>
                         <div class="goods__recomended-item border-bottom border-secondary">
                             <div class="goods__recomended-item__image">
-                                <img src="${data[4].gsx$mainimage.$t}" alt="">
+                                <img src="${data[unicIdArr[1]].gsx$mainimage.$t}" alt="">
                             </div>
                             <div class="goods__recomended-item-name">
-                            ${data[4].gsx$name.$t}
+                            ${data[unicIdArr[1]].gsx$name.$t}
                             </div>
                             <div class="goods__recomended-item-price">
-                            ${data[4].gsx$cost.$t}грн.
+                            ${data[unicIdArr[1]].gsx$cost.$t}грн.
                             </div>
                         </div>
                     </a>
-                    <a href = /goods?id=${data[5]['gsx$id']['$t']}>
+                    <a href = /goods?id=${data[unicIdArr[2]]['gsx$id']['$t']}>
                         <div class="goods__recomended-item border-bottom border-secondary">
                             <div class="goods__recomended-item__image">
-                                <img src="${data[5].gsx$mainimage.$t}" alt="">
+                                <img src="${data[unicIdArr[2]].gsx$mainimage.$t}" alt="">
                             </div>
                             <div class="goods__recomended-item-name">
-                            ${data[5].gsx$name.$t}
+                            ${data[unicIdArr[2]].gsx$name.$t}
                             </div>
                             <div class="goods__recomended-item-price">
-                            ${data[5].gsx$cost.$t}грн.
+                            ${data[unicIdArr[2]].gsx$cost.$t}грн.
                             </div>
                         </div>
                     </a>
-                    <a href = /goods?id=${data[6]['gsx$id']['$t']}>
+                    <a href = /goods?id=${data[unicIdArr[3]]['gsx$id']['$t']}>
                         <div class="goods__recomended-item border-bottom border-secondary">
                             <div class="goods__recomended-item__image">
-                                <img src="${data[6].gsx$mainimage.$t}" alt="">
+                                <img src="${data[unicIdArr[3]].gsx$mainimage.$t}" alt="">
                             </div>
                             <div class="goods__recomended-item-name">
-                            ${data[6].gsx$name.$t}
+                            ${data[unicIdArr[3]].gsx$name.$t}
                             </div>
                             <div class="goods__recomended-item-price">
-                            ${data[6].gsx$cost.$t}грн.
+                            ${data[unicIdArr[3]].gsx$cost.$t}грн.
                             </div>
                         </div>
                     </a>
