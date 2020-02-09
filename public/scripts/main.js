@@ -242,6 +242,7 @@ function ShowGoods(data) {
     }
     return out;
 }
+var idElement = [];
 var urlParams = new URLSearchParams(window.location.search);
 
 
@@ -249,10 +250,36 @@ var urlParams = new URLSearchParams(window.location.search);
 // Take ID FROM URL
 function ShowOneItem(data) {
     const test = data.find((item) => {
-        console.log(item)
-        console.log(data)
-        return item.gsx$id.$t === urlParams.get('id')
+        return item.gsx$id.$t === urlParams.get('id');
     });
+    // PUSH ID TO THE ARR
+    function takenId() {
+        for (var key in data) {
+            idElement.push(data[key].gsx$id.$t);
+        }
+    }
+
+    takenId()
+
+    // RANDOMIZE THE ARR
+    var unicIdArr = getUnicIdArr(idElement, 4);
+
+    function getUnicIdArr(arr, unicArrlength) {
+        var unicIdArr = [];
+        do {
+            var randomId = getRandomInt(Math.max(...arr)) + '';
+            if (!unicIdArr.includes(randomId) && arr.includes(randomId)) {
+                unicIdArr.push(randomId);
+            };
+        } while (unicIdArr.length < unicArrlength);
+
+        return unicIdArr
+
+        function getRandomInt(max) {
+            return Math.floor(Math.random() * Math.floor(max));
+        }
+    }
+
     var out = '';
 
     out += `<div class="goods__flex">
@@ -289,21 +316,22 @@ function ShowOneItem(data) {
                                                                     <div class="column">
                                                                         <img class="demo cursor" src="${test.gsx$imagethree.$t}" style="width:100%" onclick="currentSlide(4)" alt="${test.gsx$name.$t}">
                     </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="goods__wrap">
-                                                                    <div class="goods__name">${test.gsx$name.$t}</div>
-                                                                    <div class="goods__price">${test.gsx$cost.$t}грн.</div>
-                                                                    <div class="goods__title">
-                                                                        <h3>${test.gsx$extradescription.$t}</h3>
-                                                                    </div>
-                                                                    <div class="goods__buttons">
-                                                                        <button class="first__btn" data="${test['gsx$id']['$t']}" name="add_to_card">Добавити до корзини</button>
-                                                                        <button class="second__btn"><a href="/basket">Купити в один клік</a></button>
-                                                                    </div>
-                                                                    <div class="goods__links">
-                                                                        <a href="#" class="first__link" data-toggle="modal" data-target="#staticBackdrop">Доставка і оплата</a>
-                                                                        <!-- Modal -->
+                </div>
+            </div>
+            <div class="goods__wrap">
+                <div class="goods__name">${test.gsx$name.$t}</div>
+                <div class="goods__price">${test.gsx$cost.$t}грн.</div>
+                <div class="goods__title">
+                    <h3>${test.gsx$extradescription.$t}</h3>
+                </div>
+                <div class="goods__buttons">
+                    <a href="#"><button class="first__btn">Добавити до корзини</button></a>
+                    <a href="/basket"><button class="second__btn">Купити в один клік</button></a>
+                </div>
+                <div class="goods__links">
+                    <a href="#" class="first__link" data-toggle="modal" data-target="#staticBackdrop">Доставка і оплата</a>
+                    <!-- Modal -->
+
                     <div class="modal fade" id="staticBackdrop" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="#staticBackdrop"
                                                                             aria-hidden="true">
                                                                             <div class="modal-dialog" role="document">
@@ -338,79 +366,81 @@ function ShowOneItem(data) {
                                                                         <a href="#" class="second__link" data-toggle="modal" data-target=".bd-example-modal-lg">Наявність в магазині</a>
                                                                         <!-- Modal -->
                     <div class="modal fade bd-example-modal-lg" id="exampleModalScrollable" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-                                                                            <div class="modal-dialog modal-dialog modal-lg modal-dialog-scrollable" role="document">
-                                                                                <div class="modal-content">
-                                                                                    <div class="modal-header">
-                                                                                        <h5 class="modal-title text-center" id="exampleModalScrollableTitle">Наявність в магазині</h5>
-                                                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                                            <span aria-hidden="true">&times;</span>
-                                                                                        </button>
-                                                                                    </div>
-                                                                                    <div class="modal-body">
-                                                                                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6415.976575214061!2d24.73455391851315!3d48.938428683966094!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4730c1cd378e3003%3A0xb3c03e72e9de9027!2z0IbQs9GA0LDRiNC60Lgg0KDQsNC00L7RgdGC0LjQvdC60Lg!5e0!3m2!1suk!2sua!4v1580894698653!5m2!1suk!2sua" width="750" height="500" frameborder="0" style="border:0;" allowfullscreen=""></iframe>      </div>
-                                                                                    <div class="modal-footer">
-                                                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрити</button>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="goods__recomended">
-                                                                <div class="goods__recomended-title">
-                                                                    <h3>Вам також сподобається</h3>
-                                                                </div>
-                                                                <div class="goods__recomended-items">
-                                                                    <a href= /goods?id=${data[3]['gsx$id']['$t']}>
-                        <div class="goods__recomended-item border-bottom border-secondary">
-                                                                        <div class="goods__recomended-item__image">
-                                                                            <img src="${data[3].gsx$mainimage.$t}" alt="">
+                        <div class="modal-dialog modal-dialog modal-lg modal-dialog-scrollable" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title text-center" id="exampleModalScrollableTitle">Наявність в магазині</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6415.976575214061!2d24.73455391851315!3d48.938428683966094!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4730c1cd378e3003%3A0xb3c03e72e9de9027!2z0IbQs9GA0LDRiNC60Lgg0KDQsNC00L7RgdGC0LjQvdC60Lg!5e0!3m2!1suk!2sua!4v1580894698653!5m2!1suk!2sua" width="750" height="500" frameborder="0" style="border:0;" allowfullscreen=""></iframe>      </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрити</button>
+                                </div>
                             </div>
-                                                                            <div class="goods__recomended-item-name">
-                                                                                ${data[3].gsx$name.$t}
-                                                                            </div>
-                                                                            <div class="goods__recomended-item-price">
-                                                                                ${data[3].gsx$cost.$t}грн.
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+            <div class="goods__recomended">
+                <div class="goods__recomended-title">
+                    <h3>Вам також сподобається</h3>
+                </div>
+                <div class="goods__recomended-items">
+                    <a href = /goods?id=${data[unicIdArr[0]]['gsx$id']['$t']}>
+                        <div class="goods__recomended-item border-bottom border-secondary">
+                            <div class="goods__recomended-item__image">
+                                <img src="${data[unicIdArr[0]].gsx$mainimage.$t}" alt="">
+                            </div>
+                            <div class="goods__recomended-item-name">
+                            ${data[unicIdArr[0]].gsx$name.$t}
+                            </div>
+                            <div class="goods__recomended-item-price">
+                            ${data[unicIdArr[0]].gsx$cost.$t}грн.
+                            </div>
+                        </div>
+                    </a>
+                    <a href = /goods?id=${data[unicIdArr[1]]['gsx$id']['$t']}>
+                        <div class="goods__recomended-item border-bottom border-secondary">
+                            <div class="goods__recomended-item__image">
+                                <img src="${data[unicIdArr[1]].gsx$mainimage.$t}" alt="">
+                            </div>
+                            <div class="goods__recomended-item-name">
+                            ${data[unicIdArr[1]].gsx$name.$t}
+                            </div>
+                            <div class="goods__recomended-item-price">
+                            ${data[unicIdArr[1]].gsx$cost.$t}грн.
+
                             </div>
                                                                         </div>
                     </a>
-                                                                    <a href= /goods?id=${data[4]['gsx$id']['$t']}>
+                    <a href = /goods?id=${data[unicIdArr[2]]['gsx$id']['$t']}>
                         <div class="goods__recomended-item border-bottom border-secondary">
-                                                                        <div class="goods__recomended-item__image">
-                                                                            <img src="${data[4].gsx$mainimage.$t}" alt="">
+                            <div class="goods__recomended-item__image">
+                                <img src="${data[unicIdArr[2]].gsx$mainimage.$t}" alt="">
                             </div>
-                                                                            <div class="goods__recomended-item-name">
-                                                                                ${data[4].gsx$name.$t}
-                                                                            </div>
-                                                                            <div class="goods__recomended-item-price">
-                                                                                ${data[4].gsx$cost.$t}грн.
+                            <div class="goods__recomended-item-name">
+                            ${data[unicIdArr[2]].gsx$name.$t}
                             </div>
-                                                                        </div>
+                            <div class="goods__recomended-item-price">
+                            ${data[unicIdArr[2]].gsx$cost.$t}грн.
+                            </div>
+                        </div>
                     </a>
-                                                                    <a href= /goods?id=${data[5]['gsx$id']['$t']}>
+                    <a href = /goods?id=${data[unicIdArr[3]]['gsx$id']['$t']}>
                         <div class="goods__recomended-item border-bottom border-secondary">
-                                                                        <div class="goods__recomended-item__image">
-                                                                            <img src="${data[5].gsx$mainimage.$t}" alt="">
+                            <div class="goods__recomended-item__image">
+                                <img src="${data[unicIdArr[3]].gsx$mainimage.$t}" alt="">
                             </div>
-                                                                            <div class="goods__recomended-item-name">
-                                                                                ${data[5].gsx$name.$t}
-                                                                            </div>
-                                                                            <div class="goods__recomended-item-price">
-                                                                                ${data[5].gsx$cost.$t}грн.
+                            <div class="goods__recomended-item-name">
+                            ${data[unicIdArr[3]].gsx$name.$t}
                             </div>
-                                                                        </div>
-                    </a>
-                                                                    <a href= /goods?id=${data[6]['gsx$id']['$t']}>
-                        <div class="goods__recomended-item border-bottom border-secondary">
-                                                                        <div class="goods__recomended-item__image">
-                                                                            <img src="${data[6].gsx$mainimage.$t}" alt="">
-                            </div>
-                                                                            <div class="goods__recomended-item-name">
-                                                                                ${data[6].gsx$name.$t}
-                                                                            </div>
-                                                                            <div class="goods__recomended-item-price">
-                                                                                ${data[6].gsx$cost.$t}грн.
+                            <div class="goods__recomended-item-price">
+                            ${data[unicIdArr[3]].gsx$cost.$t}грн.
+
                             </div>
                                                                         </div>
                     </a>
