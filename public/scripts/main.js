@@ -126,6 +126,7 @@ function ShowGoods(data) {
     }
     return out;
 }
+var idElement = [];
 var urlParams = new URLSearchParams(window.location.search);
 // Take ID FROM URL
 function ShowOneItem(data) {
@@ -134,6 +135,40 @@ function ShowOneItem(data) {
         console.log(data)
         return item.gsx$id.$t === urlParams.get('id')
     });
+
+    function takenId() {
+        for (var key in data) {
+            idElement.push(data[key].gsx$id.$t);
+        }
+        console.log(idElement)
+    }
+    takenId()
+
+    var unicArr = [];
+
+    var i = 0;
+    do {
+        var test = getRandomInt(Math.max(...idElement));
+        console.log("first" , test, unicArr)
+        if (unicArr.includes(test)) return
+        unicArr.push(test)
+        i++;
+        console.log("second", test)
+        
+    } while (unicArr.length < 4);
+
+    console.log(unicArr);
+
+    function getRandomInt(max) {
+        return Math.floor(Math.random() * Math.floor(max));
+    }
+
+    var one = unicArr[0];
+    var two = unicArr[1];
+    var three = unicArr[2];
+    var four = unicArr[3];
+    console.log(one, two, three, four)
+
     var out = '';
 
     out += `<div class="goods__flex">
@@ -180,7 +215,7 @@ function ShowOneItem(data) {
                 </div>
                 <div class="goods__buttons">
                     <button class="first__btn">Добавити до корзини</button>
-                    <button class="second__btn"><a href="/basket">Купити в один клік</a></button>
+                    <a href="/basket"><button class="second__btn">Купити в один клік</button></a>
                 </div>
                 <div class="goods__links">
                     <a href="#" class="first__link" data-toggle="modal" data-target="#staticBackdrop">Доставка і оплата</a>
@@ -353,9 +388,6 @@ $(document).ready(function () {
         } else {
             $('#hidden-header').css({ border: 'none', 'background-color': 'transparent', 'box-shadow': 'none' });
         }
-
-
-
     });
 });
 

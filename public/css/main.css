@@ -23,8 +23,10 @@ body {
 }
 .header {
   background-image: url(../img/header-bg.JPG);
+  background-position: top center;
   background-repeat: no-repeat;
   background-size: cover;
+  width: 100%;
   height: 100vh;
 }
 
@@ -80,14 +82,29 @@ body {
   text-decoration: none;
 }
 
+.header__text-bg{
+  position: absolute;
+  top: 30%;
+  width: 100%;
+  height: 300px;
+  background-color: whitesmoke;
+  opacity: 0.6;
+}
+
+.header__text{
+  position: absolute;
+  top: 37%;
+  left: 0;
+  right: 0;
+}
 .header__text {
+  text-align: center;
+  text-transform: uppercase;
   color: rgb(19, 22, 25);
   max-width: 800px;
-  text-align: center;
   margin: 0 auto;
-  padding: 250px 0;
-  font-size: 60px;
-  font-weight: 700;
+  font-size: 65px;
+  font-weight: 900;
   line-height: 90px;
 }
 
@@ -101,6 +118,7 @@ hr {
 }
 
 .items {
+  font-family: 'Comfortaa', cursive;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -130,8 +148,9 @@ section {
   padding: 71px 0;
 }
 .about__us {
-  width: 712px;
+  width: 90%;
   margin: 0 auto;
+  padding: 15px;
 }
 .about__us fieldset {
   border: 2px solid #978968;
@@ -140,15 +159,16 @@ section {
   text-align: center;
   color: #525461;
   font-size: 20px;
-  font-weight: 400;
+  font-weight: 700;
   text-transform: uppercase;
   padding: 0 13px;
+  font-size: 25px;
 }
 .about__us p {
-  font-size: 16px;
+  font-size: 21px;
   font-weight: 400;
   color: #525461;
-  padding: 72px 120px 60px;
+  padding: 50px 20px 100px;
   text-align: center;
   margin: 0 auto;
   line-height: 24px;
@@ -460,6 +480,7 @@ select {
 }
 
 /* GOODS CSS */
+
 .goods{
   margin-top: 80px;
   font-family: "Comfortaa", cursive;
@@ -556,7 +577,7 @@ select {
   flex-wrap: wrap;
 }
 
-.goods__buttons button{
+.goods__buttons button {
   font-size: 12px;
   font-weight: 700;
   padding: 20px 30px;
