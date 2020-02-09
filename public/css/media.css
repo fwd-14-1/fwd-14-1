@@ -14,6 +14,19 @@
     margin: 20px auto;
     padding: 0;
 }
+
+.goods__buttons{
+  flex-direction: column;
+  margin-top: 30px;
+}
+.goods__buttons a {
+  margin-top: -15px;
+}
+
+.goods__links {
+  margin: 10px 0;
+}
+
 .goods__buttons button {
   width: 47%;
 }
@@ -32,18 +45,23 @@
 }
 
 @media (max-width: 768px) {
+  .header__text {
+    font-size: 50px;
+}
   .about__us {
     width: 600px;
   }
 }
 
 @media screen and (max-width: 700px) {
+  .header__text {
+    font-size: 41px;
+}
+.header__text-bg {
+  height: 260px;
+}
 .header__logo h1{
   font-size: 20px;
-  }
-  .header__text {
-    padding: 250px 0;
-    font-size: 50px;
   }
   .goods__recomended-title h3{
     font-size: 20px;
@@ -113,12 +131,19 @@ background-position: center;  }
     justify-content: center;
   }
   .header__text {
-    font-size: 30px;
-    line-height: 65px;
+    font-size: 35px;
+
   }
 }
 
 @media (max-width: 480px) {
+  .header__text-bg {
+    top: 33%;
+    height: 230px;
+}
+  .header__text {
+    font-size: 28px;
+  }
   .goods__description-title::after {
     left: 38%;
   }
