@@ -97,6 +97,7 @@ document.onclick = function (e) {
     else if (e.target.attributes.name.nodeValue == "removeOne") {
         delete card[selectedGoodsID];
         sessionStorage.setItem("card", JSON.stringify(card));
+        document.getElementById('basketContent').innerHTML = showBasketContent(goods);
         renderBasket();
         showTotals();
     }
@@ -106,9 +107,11 @@ document.onclick = function (e) {
 removeAlls.onclick = function () {
     sessionStorage.clear();
     card={};
+    document.getElementById("mainPrice").textContent = "";
     renderBasket();
-    showTotals();
+    document.getElementById('basketContent').innerHTML = showBasketContent(goods);
 }
+
 /* END */ 
 
 /* GOODS CSS */
@@ -146,6 +149,7 @@ function addToBasket(elem) {
 /* ADDING CONTENT INTO BASKET PAGE */
 function showBasketContent(goods) {
     var out = ``;
+    if (card != undefined){
     for (var item in card) {
         out += `<div class="basket-view-container" id ="del-${goods[item]['gsx$id']['$t']}">
             <div class="basket-view">
@@ -170,6 +174,9 @@ function showBasketContent(goods) {
                </div>`;
     }
     return out;
+}
+else{
+    return "";}
 }
 /*END*/
 
@@ -505,9 +512,7 @@ function showSlides(n) {
 
 /* SENDING DATA FOR NODEJS */
 $(function () {
-    $("#main-form").su
-
-    bmit(function (event) {
+    $("#main-form").submit(function (event) {
         event.preventDefault();
         $.post("/basket", $(this).serialize());
     })
