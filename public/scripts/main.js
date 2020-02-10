@@ -103,16 +103,16 @@ document.onclick = function (e) {
     }
 }
 
-/* REMOVE ALL ITEMS WITH MINI-BASKET */ 
+/* REMOVE ALL ITEMS WITH MINI-BASKET */
 removeAlls.onclick = function () {
     sessionStorage.clear();
-    card={};
+    card = {};
     document.getElementById("mainPrice").textContent = "";
     renderBasket();
     document.getElementById('basketContent').innerHTML = showBasketContent(goods);
 }
 
-/* END */ 
+/* END */
 
 /* GOODS CSS */
 
@@ -149,9 +149,9 @@ function addToBasket(elem) {
 /* ADDING CONTENT INTO BASKET PAGE */
 function showBasketContent(goods) {
     var out = ``;
-    if (card != undefined){
-    for (var item in card) {
-        out += `<div class="basket-view-container" id ="del-${goods[item]['gsx$id']['$t']}">
+    if (card != undefined) {
+        for (var item in card) {
+            out += `<div class="basket-view-container" id ="del-${goods[item]['gsx$id']['$t']}">
             <div class="basket-view">
                 <div class="item-photo">
                     <img src="${goods[item]['gsx$image']['$t']}" alt="${goods[item]['gsx$name']['$t']}"></div>
@@ -172,11 +172,12 @@ function showBasketContent(goods) {
                     </div>
                 
                </div>`;
+        }
+        return out;
     }
-    return out;
-}
-else{
-    return "";}
+    else {
+        return "";
+    }
 }
 /*END*/
 

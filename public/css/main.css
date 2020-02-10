@@ -480,8 +480,8 @@ select {
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 1.5px;
-  width: 25%;
   font-size: 12px;
+  border: none;
 }
 
 .card-form-container {
@@ -702,6 +702,7 @@ select {
   margin-bottom: 10px;
 }
 
+
 .goods__recomended-item-name {
   font-size: 20px;
   margin-top: 15px;
@@ -714,10 +715,22 @@ select {
 }
 
 .goods__recomended-item__image img {
-  padding: 0 5px;
+  border: none;
+  border-radius:25px;
+  transition: width 0.5s, height 0.5s, transform 0.5s;
+  margin: 0 5px;
   width: 300px;
   height: 200px;
 }
+
+.goods__recomended-item__image img:hover {
+  width: 310px;
+  height: 210px;
+}
+.goods__recomended-item__image img:hover{
+  box-shadow: 10px 10px 5px #ccc;
+}
+
 
 .card button {
   width: 100%;
