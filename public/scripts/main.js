@@ -105,6 +105,13 @@ document.onclick = function (e) {
         document.getElementById("mainPrice").textContent = "0 грн";
         showTotals();
     }
+    else if (e.target.attributes.name.nodeValue == "remove_basket") {
+        sessionStorage.clear();
+    card = {};
+    document.getElementById("mainPrice").textContent = "0 грн";
+    renderBasket();
+    document.getElementById('basketContent').innerHTML = showBasketContent(goods);
+    }
 }
 
 /* REMOVE ALL ITEMS WITH MINI-BASKET */
@@ -506,12 +513,8 @@ $(document).ready(function () {
                 'border-bottom': '2px solid white', 'background-color': '#fff',
                 'box-shadow': '0 0 10px rgba(0,0,0,0.5)'
             });
-            if(window.location.pathname==="/index" ){
-            $('h1').css({color:'#000'});}
         } else {
             $('#hidden-header').css({ border: 'none', 'background-color': 'transparent', 'box-shadow': 'none' });
-            if(window.location.pathname==="/index" ){
-            $('h1').css({color:'#fff'});}
         }
     });
 });
@@ -556,11 +559,3 @@ $(function () {
     })
 })
 /* END */
-
-removeBasket.onclick = function () {
-    sessionStorage.clear();
-    card = {};
-    document.getElementById("mainPrice").textContent = "0 грн";
-    renderBasket();
-    document.getElementById('basketContent').innerHTML = showBasketContent(goods);
-}
