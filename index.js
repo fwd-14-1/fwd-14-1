@@ -54,10 +54,10 @@ app.post('/basket', function (req, res) {
   };
   transporter.sendMail(mailOptions, function (error, info) {
     if (error) {
-      res.send();
+      res.end();
     } else {
       console.log('Email sent: ' + info.response);
-      res.end();
+      res.send(true);
 
     }
   });
