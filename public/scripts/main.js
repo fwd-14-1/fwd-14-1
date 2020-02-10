@@ -555,7 +555,19 @@ function showSlides(n) {
 $(function () {
     $("#main-form").submit(function (event) {
         event.preventDefault();
-        $.post("/basket", $(this).serialize());
+        $.post("/basket", $(this).serialize()).done(function(data) {
+            if(data){
+                $('#boxUserFirstInfo').arcticmodal({
+                    closeOnOverlayClick: false,
+                    closeOnEsc: true
+                }); 
+          }
+              else {$('#boxUserFirstInfoFalse').arcticmodal({
+                closeOnOverlayClick: false,
+                closeOnEsc: true
+            }); }
+            });
+            
     })
 })
 /* END */
