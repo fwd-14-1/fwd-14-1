@@ -86,6 +86,7 @@ document.onclick = function (e) {
         delete card[selectedGoodsID];
         sessionStorage.setItem("card", JSON.stringify(card));
         renderBasket();
+        showTotals();
         document.getElementById(`del-${goods[selectedGoodsID]['gsx$id']['$t']}`).innerHTML = "";
     }
     else if (e.target.attributes.name.nodeValue == "card_delete_one") {
@@ -97,8 +98,11 @@ document.onclick = function (e) {
     else if (e.target.attributes.name.nodeValue == "removeOne") {
         delete card[selectedGoodsID];
         sessionStorage.setItem("card", JSON.stringify(card));
-        document.getElementById('basketContent').innerHTML = showBasketContent(goods);
         renderBasket();
+        if (document.getElementById('basketContent')) {
+            document.getElementById('basketContent').innerHTML = showBasketContent(goods);
+        }
+        document.getElementById("mainPrice").textContent = "0 грн";
         showTotals();
     }
 }
@@ -107,14 +111,12 @@ document.onclick = function (e) {
 removeAlls.onclick = function () {
     sessionStorage.clear();
     card = {};
-    document.getElementById("mainPrice").textContent = "";
+    document.getElementById("mainPrice").textContent = "0 грн";
     renderBasket();
     document.getElementById('basketContent').innerHTML = showBasketContent(goods);
 }
 
 /* END */
-
-/* GOODS CSS */
 
 
 /* CHANGE THE STORAGE DATA CSS */
@@ -325,8 +327,8 @@ function ShowOneItem(data) {
                     <h3>${test.gsx$extradescription.$t}</h3>
                 </div>
                 <div class="goods__buttons">
-                    <a href="#"><button class="first__btn">Добавити до корзини</button></a>
-                    <a href="/basket"><button class="second__btn">Купити в один клік</button></a>
+                    <a href="#"><button class="first__btn" data="${test['gsx$id']['$t']}" name="add_to_card">Добавити до корзини</button></a>
+                    <a href="/basket"><button class="second__btn" data="${test['gsx$id']['$t']}" name="add_to_card">Купити в один клік</button></a>
                 </div>
                 <div class="goods__links">
                     <a href="#" class="first__link" data-toggle="modal" data-target="#staticBackdrop">Доставка і оплата</a>
@@ -497,14 +499,19 @@ var minibasket = new MiniBasket();
 
 $(document).ready(function () {
     const $window = $(window);
+    console.log(window.location.pathname);
     $(window).scroll(function () {
-        if ($(window).scrollTop() >= $window.height()) {
+        if ($(window).scrollTop() >= 0.9*$window.height()) {
             $('#hidden-header').css({
                 'border-bottom': '2px solid white', 'background-color': '#fff',
                 'box-shadow': '0 0 10px rgba(0,0,0,0.5)'
             });
+            if(window.location.pathname==="/index" ){
+            $('h1').css({color:'#000'});}
         } else {
             $('#hidden-header').css({ border: 'none', 'background-color': 'transparent', 'box-shadow': 'none' });
+            if(window.location.pathname==="/index" ){
+            $('h1').css({color:'#fff'});}
         }
     });
 });
@@ -549,3 +556,11 @@ $(function () {
     })
 })
 /* END */
+
+removeBasket.onclick = function () {
+    sessionStorage.clear();
+    card = {};
+    document.getElementById("mainPrice").textContent = "0 грн";
+    renderBasket();
+    document.getElementById('basketContent').innerHTML = showBasketContent(goods);
+}
