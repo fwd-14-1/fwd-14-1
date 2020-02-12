@@ -39,8 +39,6 @@ window.onload = function () {
             if (document.getElementById('goods')) {
                 document.getElementById('goods').innerHTML += ShowGoods(data);
                 renderBasket();
-
-
             }
             else if (document.getElementById('goods-content')) {
                 document.getElementById('goods-content').innerHTML = ShowOneItem(data);
@@ -49,7 +47,6 @@ window.onload = function () {
             else if (document.getElementById('basketContent')) {
                 document.getElementById('basketContent').innerHTML = showBasketContent(data);
                 document.getElementById('basketData').innerHTML = `<textarea value="" name="comment">${insertData()}</textarea>`;
-
                 renderBasket();
             }
         }
