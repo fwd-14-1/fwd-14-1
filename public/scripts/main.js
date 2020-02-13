@@ -107,16 +107,18 @@ document.onclick = function (e) {
     }
     else if (e.target.attributes.name.nodeValue == "remove_basket") {
         sessionStorage.clear();
-    card = {};
-    document.getElementById("mainPrice").textContent = "0 грн";
-    renderBasket();
-    document.getElementById('basketContent').innerHTML = showBasketContent(goods);
+        card = {};
+        document.getElementById("mainPrice").textContent = "0 грн";
+        renderBasket();
+        document.getElementById('basketContent').innerHTML = showBasketContent(goods);
     }
 }
 
 /* REMOVE ALL ITEMS WITH MINI-BASKET */
 removeAlls.onclick = function () {
     sessionStorage.clear();
+    basketNumber = 0 ;
+    basketNumberHTML.innerHTML = 0;
     card = {};
     document.getElementById("mainPrice").textContent = "0 грн";
     renderBasket();
@@ -142,16 +144,25 @@ function removeFromBasket(elem) {
     renderBasket();
 }
 
+let basketNumber = 0;
+let basketNumberHTML = document.getElementById("mini-basket__link-number");
+basketNumberHTML.innerHTML = basketNumber;
+
 function addToBasket(elem) {
     if (card[elem] !== undefined) {
         card[elem]++;
+        basketNumber++;
     }
     else {
-        card[elem] = 1;
+        card[elem] = 1; 
+        basketNumber = basketNumber + 1;
     }
     sessionStorage.setItem("card", JSON.stringify(card));
     renderBasket();
+    basketNumberHTML.innerHTML = basketNumber 
+    console.log(basketNumber)
 }
+
 /* END*/
 
 
@@ -267,6 +278,7 @@ function ShowOneItem(data) {
             idElement.push(data[key].gsx$id.$t);
         }
     }
+    
 
     takenId()
 
@@ -508,7 +520,7 @@ $(document).ready(function () {
     const $window = $(window);
     console.log(window.location.pathname);
     $(window).scroll(function () {
-        if ($(window).scrollTop() >= 0.9*$window.height()) {
+        if ($(window).scrollTop() >= 0.9 * $window.height()) {
             $('#hidden-header').css({
                 'border-bottom': '2px solid white', 'background-color': '#fff',
                 'box-shadow': '0 0 10px rgba(0,0,0,0.5)'
@@ -555,19 +567,21 @@ function showSlides(n) {
 $(function () {
     $("#main-form").submit(function (event) {
         event.preventDefault();
-        $.post("/basket", $(this).serialize()).done(function(data) {
-            if(data){
+        $.post("/basket", $(this).serialize()).done(function (data) {
+            if (data) {
                 $('#boxUserFirstInfo').arcticmodal({
                     closeOnOverlayClick: false,
                     closeOnEsc: true
-                }); 
-          }
-              else {$('#boxUserFirstInfoFalse').arcticmodal({
-                closeOnOverlayClick: false,
-                closeOnEsc: true
-            }); }
-            });
-            
+                });
+            }
+            else {
+                $('#boxUserFirstInfoFalse').arcticmodal({
+                    closeOnOverlayClick: false,
+                    closeOnEsc: true
+                });
+            }
+        });
+
     })
 })
 /* END */
