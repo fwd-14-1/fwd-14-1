@@ -2,7 +2,6 @@
 * {
   box-sizing: border-box;
 }
-
 body {
   margin: 0;
   padding: 0;
@@ -385,6 +384,9 @@ button.clean-basket {
   border-bottom: 1px solid black;
   margin-bottom: 40px;
 }
+.big-basket{
+  width: 100vw;
+}
 .big-basket hr {
   width: 90%;
 }
@@ -486,6 +488,7 @@ select {
 
 .card-form-container {
   width: 80%;
+  margin: 0;
 }
 
 .card-input-wrapper datalist {
@@ -741,4 +744,8 @@ select {
 
 .modal-content li {
   padding-bottom: 10px;
+}
+
+#main-form{
+  width: 100%;
 }
