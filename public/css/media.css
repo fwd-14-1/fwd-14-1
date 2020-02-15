@@ -192,3 +192,9 @@ background-position: center;  }
   }
 
 }
+
+@media (max-width: 400px) {
+.card-form{
+  flex-direction: column;
+}
+}
